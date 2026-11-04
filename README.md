@@ -38,6 +38,17 @@ vim.cmd.colorscheme("ansi")
 
 The plugin works in any terminal that answers OSC 4 palette queries. It does not check the terminal name or require Rex. OSC 10 and 11 provide the terminal's default foreground and background when supported.
 
+## Appearance
+
+Functions and types use regular weight. The active line uses a subtle raised surface color and an accented line number.
+
+Loading the colorscheme enables `cursorline`. To disable it, set the option after loading the colorscheme:
+
+```lua
+vim.cmd.colorscheme("ansi")
+vim.opt.cursorline = false
+```
+
 ## Changing themes
 
 The palette is read once when the colorscheme loads. After changing your terminal theme, restart Neovim or run `:colorscheme ansi` to update the colors.

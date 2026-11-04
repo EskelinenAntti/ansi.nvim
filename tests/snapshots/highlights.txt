@@ -16,7 +16,6 @@
     italic = true
   },
   ["@constructor"] = {
-    bold = true,
     fg = "#d2b071"
   },
   ["@diff.delta"] = {
@@ -38,14 +37,12 @@
     link = "Function"
   },
   ["@function.builtin"] = {
-    bold = true,
     fg = "#66c2b5"
   },
   ["@function.call"] = {
     fg = "#729fc0"
   },
   ["@function.method"] = {
-    bold = true,
     fg = "#729fc0"
   },
   ["@function.method.call"] = {
@@ -147,7 +144,6 @@
     italic = true
   },
   ["@type.definition"] = {
-    bold = true,
     fg = "#d2b071"
   },
   ["@variable"] = {
@@ -225,9 +221,10 @@
     bg = "#373939"
   },
   CursorLine = {
-    bg = "#373939"
+    bg = "#1c1f21"
   },
   CursorLineNr = {
+    bg = "#1c1f21",
     bold = true,
     fg = "#729fc0"
   },
@@ -361,7 +358,6 @@
     italic = true
   },
   Function = {
-    bold = true,
     fg = "#729fc0"
   },
   GitSignsAdd = {
@@ -552,14 +548,12 @@
     fg = "#9ca3a4"
   },
   StorageClass = {
-    bold = true,
     fg = "#d2b071"
   },
   String = {
     fg = "#7cbfa0"
   },
   Structure = {
-    bold = true,
     fg = "#d2b071"
   },
   Substitute = {
@@ -640,11 +634,9 @@
     fg = "#14181a"
   },
   Type = {
-    bold = true,
     fg = "#d2b071"
   },
   Typedef = {
-    bold = true,
     fg = "#d2b071"
   },
   Underlined = {

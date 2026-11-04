@@ -37,6 +37,7 @@ function M.apply()
 	local terminal = require("ansi.terminal")
 	terminal.cancel()
 	vim.g.colors_name = M.name
+	vim.opt.cursorline = true
 	local colors = terminal.colors
 	if colors then
 		apply_colors(colors)

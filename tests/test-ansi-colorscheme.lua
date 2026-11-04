@@ -2,6 +2,7 @@ local send
 local term_program
 local notify
 local list_uis
+local cursorline
 
 local function respond(colors)
 	for index = 0, 15 do
@@ -38,6 +39,8 @@ return {
 	before = function()
 		require("ansi.terminal").cancel()
 		require("ansi.terminal").colors = nil
+		cursorline = vim.opt.cursorline:get()
+		vim.opt.cursorline = false
 		term_program = vim.env.TERM_PROGRAM
 		send = vim.api.nvim_ui_send
 		vim.api.nvim_ui_send = function() end
@@ -55,6 +58,23 @@ return {
 		vim.api.nvim_list_uis = list_uis
 		vim.env.TERM_PROGRAM = term_program
 		vim.notify = notify
+		vim.opt.cursorline = cursorline
+	end,
+
+	["Loading the colorscheme enables the cursor line and allows a user override"] = function()
+		-- When
+		vim.cmd.colorscheme("ansi")
+		respond(require("tests.current.colors"))
+
+		-- Then
+		assert(vim.wo.cursorline, "Cursor line was not enabled")
+
+		-- When
+		vim.opt.cursorline = false
+		respond(require("tests.current.colors"))
+
+		-- Then
+		assert(not vim.wo.cursorline, "User override was reset")
 	end,
 
 	["Terminal theme colors are applied as Neovim highlights"] = function()
