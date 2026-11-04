@@ -1,6 +1,6 @@
 local M = {}
 
-M.name = "rex"
+M.name = "ansi"
 
 ---@param colors table
 local function apply_colors(colors)
@@ -8,8 +8,8 @@ local function apply_colors(colors)
 		return
 	end
 
-	local palette = require("rex-theme.palette").palette_for(colors)
-	local highlights = require("rex-theme.highlighter").highlights_for(palette)
+	local palette = require("ansi.palette").palette_for(colors)
+	local highlights = require("ansi.highlighter").highlights_for(palette)
 
 	-- Changing 'background' can reload the active colorscheme. Set it before registering ours.
 	vim.g.colors_name = nil
@@ -29,20 +29,12 @@ local function apply_colors(colors)
 end
 
 function M.apply()
-	if not require("rex-theme.environment").is_rex() then
-		vim.notify(
-			"Tried to apply `rex` colorscheme outside of Rex.\n\n"
-				.. 'Use require("rex-theme.environment").is_rex() to select a different colorscheme outside of Rex.',
-			vim.log.levels.WARN
-		)
-		return
-	end
 	if not vim.api.nvim_ui_send then
-		vim.notify("rex-theme.nvim requires Neovim 0.12 or later.", vim.log.levels.ERROR)
+		vim.notify("ansi.nvim requires Neovim 0.12 or later.", vim.log.levels.ERROR)
 		return
 	end
 
-	local terminal = require("rex-theme.terminal")
+	local terminal = require("ansi.terminal")
 	terminal.cancel()
 	vim.g.colors_name = M.name
 	local colors = terminal.colors

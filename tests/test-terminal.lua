@@ -5,14 +5,14 @@ local notify
 local function respond(colors)
 	for index = 15, 0, -1 do
 		local color = colors[index]
-		require("rex-theme.terminal").receive(
+		require("ansi.terminal").receive(
 			string.format("\027]4;%d;rgb:%s/%s/%s", index, color:sub(2, 3), color:sub(4, 5), color:sub(6, 7))
 		)
 	end
 	for index, key in ipairs({ "foreground", "background" }) do
 		local color = colors[key]
 		if color then
-			require("rex-theme.terminal").receive(
+			require("ansi.terminal").receive(
 				string.format("\027]%d;rgb:%s/%s/%s", index + 9, color:sub(2, 3), color:sub(4, 5), color:sub(6, 7))
 			)
 		end
@@ -21,7 +21,7 @@ end
 
 return {
 	before = function()
-		local terminal = require("rex-theme.terminal")
+		local terminal = require("ansi.terminal")
 		terminal.cancel()
 		terminal.colors = nil
 		send = vim.api.nvim_ui_send
@@ -34,7 +34,7 @@ return {
 	end,
 
 	after = function()
-		require("rex-theme.terminal").cancel()
+		require("ansi.terminal").cancel()
 		vim.api.nvim_ui_send = send
 		vim.api.nvim_list_uis = list_uis
 		vim.notify = notify
@@ -52,7 +52,7 @@ return {
 
 		for _, response in ipairs(responses) do
 			-- When
-			local key, color = require("rex-theme.terminal").parse_response(response[1])
+			local key, color = require("ansi.terminal").parse_response(response[1])
 
 			-- Then
 			assert(key == response[2], "got:" .. tostring(key))
@@ -74,7 +74,7 @@ return {
 
 		for _, response in ipairs(responses) do
 			-- When
-			local key = require("rex-theme.terminal").parse_response(response)
+			local key = require("ansi.terminal").parse_response(response)
 
 			-- Then
 			assert(key == nil, "Accepted malformed response: " .. response)
@@ -89,8 +89,8 @@ return {
 		end
 
 		-- When
-		require("rex-theme.terminal").query(function() end)
-		require("rex-theme.terminal").query(function() end)
+		require("ansi.terminal").query(function() end)
+		require("ansi.terminal").query(function() end)
 
 		-- Then
 		assert(
@@ -110,7 +110,7 @@ return {
 		-- Given
 		local got
 		local count = 0
-		require("rex-theme.terminal").query(function(colors)
+		require("ansi.terminal").query(function(colors)
 			got = colors
 			count = count + 1
 		end)
@@ -126,7 +126,7 @@ return {
 
 	["The previous palette is kept until every ANSI color has arrived"] = function()
 		-- Given
-		local terminal = require("rex-theme.terminal")
+		local terminal = require("ansi.terminal")
 		terminal.colors = vim.deepcopy(require("tests.current.colors"))
 		local previous = vim.deepcopy(terminal.colors)
 		terminal.query(function()
@@ -142,7 +142,7 @@ return {
 
 	["Loading the colorscheme again can apply the same palette"] = function()
 		-- Given
-		local terminal = require("rex-theme.terminal")
+		local terminal = require("ansi.terminal")
 		terminal.colors = vim.deepcopy(require("tests.current.colors"))
 		local applied = false
 		terminal.query(function()
@@ -157,13 +157,13 @@ return {
 		assert(applied)
 	end,
 
-	["Rex versions without default color responses still supply a palette"] = function()
+	["Terminals without default color responses still supply a palette"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
 		colors.foreground = nil
 		colors.background = nil
 		local got
-		require("rex-theme.terminal").query(function(result)
+		require("ansi.terminal").query(function(result)
 			got = result
 		end)
 
@@ -182,7 +182,7 @@ return {
 
 	["Cancelled requests ignore late responses"] = function()
 		-- Given
-		local terminal = require("rex-theme.terminal")
+		local terminal = require("ansi.terminal")
 		terminal.query(function()
 			error("Cancelled request was applied")
 		end)
@@ -197,7 +197,7 @@ return {
 
 	["Incomplete queries keep the previous palette and clean up their listeners"] = function()
 		-- Given
-		local terminal = require("rex-theme.terminal")
+		local terminal = require("ansi.terminal")
 		local previous = vim.deepcopy(require("tests.current.colors"))
 		terminal.colors = previous
 		local warning
@@ -219,6 +219,6 @@ return {
 
 		-- Then
 		assert(terminal.colors == previous)
-		assert(#vim.api.nvim_get_autocmds({ group = "rex-theme-query" }) == 0)
+		assert(#vim.api.nvim_get_autocmds({ group = "ansi-query" }) == 0)
 	end,
 }

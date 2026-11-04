@@ -31,7 +31,7 @@ local function brightness(color)
 	return 0.299 * rgb[1] + 0.587 * rgb[2] + 0.114 * rgb[3]
 end
 
----Map Rex's ANSI colors and default colors into Palette.
+---Map the terminal's ANSI colors and default colors into Palette.
 ---@param colors table Raw terminal colors, with ANSI indices starting at 0
 ---@return Palette
 function M.palette_for(colors)

@@ -5,7 +5,7 @@ M.colors = nil
 
 local pending
 local timeout
-local group = vim.api.nvim_create_augroup("rex-theme-query", { clear = true })
+local group = vim.api.nvim_create_augroup("ansi-query", { clear = true })
 
 ---Parse a terminal color response. Neovim strips the string terminator from TermResponse events.
 ---@param sequence string
@@ -63,7 +63,7 @@ local function finish()
 
 	for index = 0, 15 do
 		if not request.colors[index] then
-			vim.notify("Could not read Rex theme colors from the terminal.", vim.log.levels.WARN)
+			vim.notify("Could not read theme colors from the terminal.", vim.log.levels.WARN)
 			return
 		end
 	end

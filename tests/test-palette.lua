@@ -1,10 +1,10 @@
 return {
-	["Rex ANSI colors are mapped to the same highlight palette as the other themes"] = function()
+	["Terminal ANSI colors are mapped to the same highlight palette as the other themes"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
 
 		-- When
-		local got = require("rex-theme.palette").palette_for(colors)
+		local got = require("ansi.palette").palette_for(colors)
 
 		-- Then
 		assert(got.background == colors.background)
@@ -18,14 +18,14 @@ return {
 		assert(vim.deep_equal(colors, require("tests.current.colors")), "Source colors were modified")
 	end,
 
-	["Use ANSI background and foreground when Rex does not answer OSC 10 and 11"] = function()
+	["Use ANSI background and foreground when the terminal does not answer OSC 10 and 11"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
 		colors.background = nil
 		colors.foreground = nil
 
 		-- When
-		local got = require("rex-theme.palette").palette_for(colors)
+		local got = require("ansi.palette").palette_for(colors)
 
 		-- Then
 		assert(got.background == colors[0])
@@ -39,7 +39,7 @@ return {
 		colors.foreground = "#000000"
 
 		-- When
-		local got = require("rex-theme.palette").palette_for(colors)
+		local got = require("ansi.palette").palette_for(colors)
 
 		-- Then
 		assert(got.mode == "light")

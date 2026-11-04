@@ -1,25 +1,25 @@
-# rex-theme.nvim 🎨
+# ansi.nvim 🎨
 
-A standalone Neovim colorscheme plugin that uses the active [Rex](https://www.superlogical.com/rex) theme colors.
+A standalone Neovim colorscheme plugin that uses the active terminal theme colors, in [Rex](https://www.superlogical.com/rex) and other compatible terminals.
 
 Main features:
 - Minimal footprint: no need to install any 3rd party theme plugins separately.
-- Supports custom Rex themes out-of-the-box. No additional configuration needed.
+- Supports custom terminal themes out-of-the-box. No additional configuration needed.
 - Shares highlight definitions with [omarchy-theme.nvim](https://github.com/EskelinenAntti/omarchy-theme.nvim), with no dependency on Omarchy.
 - Works with any plugin manager.
 
 ## Requirements
 
 - Neovim 0.12 or later.
-- Neovim running in a Rex terminal.
+- A terminal that supports ANSI palette queries using OSC 4.
 
 ## Installation with vim.pack (Neovim built-in plugin manager)
 
 Add these two lines to your init.lua file and you are good to go.
 
 ```lua
-vim.pack.add({"https://github.com/EskelinenAntti/rex-theme.nvim"})
-vim.cmd.colorscheme("rex")
+vim.pack.add({"https://github.com/EskelinenAntti/ansi.nvim"})
+vim.cmd.colorscheme("ansi")
 ```
 
 <details>
@@ -28,29 +28,19 @@ vim.cmd.colorscheme("rex")
     <p>
     To use the plugin
     <ol>
-        <li>Install the <code>EskelinenAntti/rex-theme.nvim</code> plugin following the usual steps of your chosen plugin manager.</li>
-        <li>Set colorscheme to "rex" with <code>vim.cmd.colorscheme("rex")</code>.</li>
+        <li>Install the <code>EskelinenAntti/ansi.nvim</code> plugin following the usual steps of your chosen plugin manager.</li>
+        <li>Set colorscheme to "ansi" with <code>vim.cmd.colorscheme("ansi")</code>.</li>
     </ol>
     </p>
 </details>
 
 ### Other terminals
 
-The plugin only activates when `TERM_PROGRAM` is `rex`. You can safely include it in your Neovim configuration, even if you share it between multiple devices.
-
-To specify a theme to be used outside of Rex, you can simply do
-
-```lua
-if require("rex-theme.environment").is_rex() then
-    vim.cmd.colorscheme("rex")
-else
-    vim.cmd.colorscheme("retrobox") -- or whatever colorscheme you prefer outside of Rex
-end
-```
+The plugin works in any terminal that answers OSC 4 palette queries. It does not check the terminal name or require Rex. OSC 10 and 11 provide the terminal's default foreground and background when supported.
 
 ## Changing themes
 
-The palette is read once when the colorscheme loads. After changing your Rex theme, restart Neovim or run `:colorscheme rex` to update the colors.
+The palette is read once when the colorscheme loads. After changing your terminal theme, restart Neovim or run `:colorscheme ansi` to update the colors.
 
 ## How it works
 
