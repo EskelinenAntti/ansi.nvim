@@ -1,0 +1,741 @@
+{
+  ["@boolean"] = {
+    link = "Boolean"
+  },
+  ["@character"] = {
+    link = "Character"
+  },
+  ["@comment"] = {
+    link = "Comment"
+  },
+  ["@constant"] = {
+    link = "Constant"
+  },
+  ["@constant.builtin"] = {
+    fg = "#d2b071",
+    italic = true
+  },
+  ["@constructor"] = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  ["@diff.delta"] = {
+    fg = "#d2b071"
+  },
+  ["@diff.minus"] = {
+    fg = "#dd7a72"
+  },
+  ["@diff.plus"] = {
+    fg = "#7cbfa0"
+  },
+  ["@field"] = {
+    fg = "#729fc0"
+  },
+  ["@float"] = {
+    link = "Float"
+  },
+  ["@function"] = {
+    link = "Function"
+  },
+  ["@function.builtin"] = {
+    bold = true,
+    fg = "#66c2b5"
+  },
+  ["@function.call"] = {
+    fg = "#729fc0"
+  },
+  ["@function.method"] = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  ["@function.method.call"] = {
+    fg = "#729fc0"
+  },
+  ["@keyword"] = {
+    link = "Keyword"
+  },
+  ["@keyword.conditional"] = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  ["@keyword.function"] = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  ["@keyword.import"] = {
+    bold = true,
+    fg = "#66c2b5"
+  },
+  ["@keyword.operator"] = {
+    bold = true,
+    fg = "#66c2b5"
+  },
+  ["@keyword.repeat"] = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  ["@keyword.return"] = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  ["@markup.heading"] = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  ["@markup.italic"] = {
+    fg = "#d2dbdc",
+    italic = true
+  },
+  ["@markup.link"] = {
+    fg = "#729fc0",
+    underline = true
+  },
+  ["@markup.raw"] = {
+    fg = "#7cbfa0"
+  },
+  ["@markup.strong"] = {
+    bold = true,
+    fg = "#e5eded"
+  },
+  ["@number"] = {
+    link = "Number"
+  },
+  ["@operator"] = {
+    link = "Operator"
+  },
+  ["@property"] = {
+    fg = "#729fc0"
+  },
+  ["@punctuation.bracket"] = {
+    fg = "#d2dbdc"
+  },
+  ["@punctuation.delimiter"] = {
+    fg = "#575c5e"
+  },
+  ["@punctuation.special"] = {
+    fg = "#66c2b5"
+  },
+  ["@string"] = {
+    link = "String"
+  },
+  ["@string.documentation"] = {
+    fg = "#7cbfa0",
+    italic = true
+  },
+  ["@string.escape"] = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  ["@string.special"] = {
+    fg = "#66c2b5"
+  },
+  ["@tag"] = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  ["@tag.attribute"] = {
+    fg = "#d2b071"
+  },
+  ["@tag.delimiter"] = {
+    fg = "#575c5e"
+  },
+  ["@type"] = {
+    link = "Type"
+  },
+  ["@type.builtin"] = {
+    fg = "#d2b071",
+    italic = true
+  },
+  ["@type.definition"] = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  ["@variable"] = {
+    fg = "#d2dbdc"
+  },
+  ["@variable.builtin"] = {
+    fg = "#dd7a72",
+    italic = true
+  },
+  ["@variable.member"] = {
+    fg = "#729fc0"
+  },
+  ["@variable.parameter"] = {
+    fg = "#d2dbdc",
+    italic = true
+  },
+  Added = {
+    fg = "#7cbfa0"
+  },
+  Boolean = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  Changed = {
+    fg = "#d2b071"
+  },
+  Character = {
+    fg = "#7cbfa0"
+  },
+  CmpItemAbbr = {
+    fg = "#d2dbdc"
+  },
+  CmpItemAbbrMatch = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  CmpItemAbbrMatchFuzzy = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  CmpItemKind = {
+    fg = "#66c2b5"
+  },
+  CmpItemMenu = {
+    fg = "#7d8385",
+    italic = true
+  },
+  ColorColumn = {
+    bg = "#2f3335"
+  },
+  Comment = {
+    fg = "#7d8385",
+    italic = true
+  },
+  Conceal = {
+    fg = "#575c5e"
+  },
+  Conditional = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  Constant = {
+    fg = "#d2b071"
+  },
+  CurSearch = {
+    bold = true,
+    fg = "#d2b071",
+    reverse = true
+  },
+  Cursor = {
+    bg = "#e5eded",
+    fg = "#14181a"
+  },
+  CursorColumn = {
+    bg = "#2f3335"
+  },
+  CursorLine = {
+    bg = "#2f3335"
+  },
+  CursorLineNr = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  Debug = {
+    fg = "#dd7a72"
+  },
+  Define = {
+    fg = "#66c2b5"
+  },
+  Delimiter = {
+    fg = "#d2dbdc"
+  },
+  DiagnosticError = {
+    fg = "#dd7a72"
+  },
+  DiagnosticHint = {
+    fg = "#66c2b5"
+  },
+  DiagnosticInfo = {
+    fg = "#729fc0"
+  },
+  DiagnosticOk = {
+    fg = "#7cbfa0"
+  },
+  DiagnosticSignError = {
+    fg = "#dd7a72"
+  },
+  DiagnosticSignHint = {
+    fg = "#66c2b5"
+  },
+  DiagnosticSignInfo = {
+    fg = "#729fc0"
+  },
+  DiagnosticSignWarn = {
+    fg = "#d2b071"
+  },
+  DiagnosticUnderlineError = {
+    sp = "#dd7a72",
+    undercurl = true
+  },
+  DiagnosticUnderlineHint = {
+    sp = "#66c2b5",
+    undercurl = true
+  },
+  DiagnosticUnderlineInfo = {
+    sp = "#729fc0",
+    undercurl = true
+  },
+  DiagnosticUnderlineWarn = {
+    sp = "#d2b071",
+    undercurl = true
+  },
+  DiagnosticVirtualTextError = {
+    fg = "#dd7a72",
+    italic = true
+  },
+  DiagnosticVirtualTextHint = {
+    fg = "#66c2b5",
+    italic = true
+  },
+  DiagnosticVirtualTextInfo = {
+    fg = "#729fc0",
+    italic = true
+  },
+  DiagnosticVirtualTextOk = {
+    fg = "#7cbfa0",
+    italic = true
+  },
+  DiagnosticVirtualTextWarn = {
+    fg = "#d2b071",
+    italic = true
+  },
+  DiagnosticWarn = {
+    fg = "#d2b071"
+  },
+  DiffAdd = {
+    bg = "#121517",
+    fg = "#7cbfa0"
+  },
+  DiffChange = {
+    bg = "#121517",
+    fg = "#d2b071"
+  },
+  DiffDelete = {
+    bg = "#121517",
+    fg = "#dd7a72"
+  },
+  DiffText = {
+    bg = "#2f3335",
+    bold = true,
+    fg = "#e5eded"
+  },
+  Directory = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  EndOfBuffer = {
+    fg = "#121517"
+  },
+  Error = {
+    bold = true,
+    fg = "#dd7a72"
+  },
+  ErrorMsg = {
+    bold = true,
+    fg = "#dd7a72"
+  },
+  Exception = {
+    bold = true,
+    fg = "#dd7a72"
+  },
+  Float = {
+    fg = "#d2b071"
+  },
+  FloatBorder = {
+    bg = "#1c2022",
+    fg = "#575c5e"
+  },
+  FloatTitle = {
+    bg = "#1c2022",
+    bold = true,
+    fg = "#729fc0"
+  },
+  FoldColumn = {
+    bg = "#14181a",
+    fg = "#7d8385"
+  },
+  Folded = {
+    bg = "#121517",
+    fg = "#7d8385",
+    italic = true
+  },
+  Function = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  GitSignsAdd = {
+    fg = "#7cbfa0"
+  },
+  GitSignsChange = {
+    fg = "#d2b071"
+  },
+  GitSignsDelete = {
+    fg = "#dd7a72"
+  },
+  HealthError = {
+    bold = true,
+    fg = "#dd7a72"
+  },
+  HealthSuccess = {
+    bold = true,
+    fg = "#7cbfa0"
+  },
+  HealthWarning = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  Identifier = {
+    fg = "#d2dbdc"
+  },
+  IncSearch = {
+    bold = true,
+    fg = "#d2b071",
+    reverse = true
+  },
+  Include = {
+    fg = "#66c2b5"
+  },
+  Keyword = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  Label = {
+    fg = "#66c2b5"
+  },
+  LineNr = {
+    fg = "#7d8385"
+  },
+  LspCodeLens = {
+    fg = "#7d8385",
+    italic = true
+  },
+  LspCodeLensSeparator = {
+    fg = "#575c5e"
+  },
+  LspInlayHint = {
+    bg = "#121517",
+    fg = "#7d8385",
+    italic = true
+  },
+  LspReferenceRead = {
+    bg = "#2f3335"
+  },
+  LspReferenceText = {
+    bg = "#2f3335"
+  },
+  LspReferenceWrite = {
+    bg = "#2f3335",
+    bold = true
+  },
+  LspSignatureActiveParameter = {
+    bg = "#2f3335",
+    bold = true,
+    fg = "#e5eded"
+  },
+  Macro = {
+    fg = "#66c2b5"
+  },
+  MatchParen = {
+    bg = "#575c5e",
+    bold = true,
+    fg = "#e5eded"
+  },
+  ModeMsg = {
+    bold = true,
+    fg = "#d2dbdc"
+  },
+  MoreMsg = {
+    bold = true,
+    fg = "#66c2b5"
+  },
+  MsgArea = {
+    bg = "#14181a",
+    fg = "#d2dbdc"
+  },
+  NonText = {
+    fg = "#7d8385"
+  },
+  Normal = {
+    bg = "#14181a",
+    fg = "#d2dbdc"
+  },
+  NormalFloat = {
+    bg = "#1c2022",
+    fg = "#d2dbdc"
+  },
+  NormalNC = {
+    bg = "#121517",
+    fg = "#d2dbdc"
+  },
+  Number = {
+    fg = "#d2b071"
+  },
+  Operator = {
+    fg = "#66c2b5"
+  },
+  Pmenu = {
+    bg = "#1c2022",
+    fg = "#d2dbdc"
+  },
+  PmenuSbar = {
+    bg = "#2f3335"
+  },
+  PmenuSel = {
+    bg = "#2f3335",
+    bold = true,
+    fg = "#e5eded"
+  },
+  PmenuThumb = {
+    bg = "#575c5e"
+  },
+  PreCondit = {
+    fg = "#66c2b5"
+  },
+  PreProc = {
+    fg = "#66c2b5"
+  },
+  Question = {
+    bold = true,
+    fg = "#7cbfa0"
+  },
+  Removed = {
+    fg = "#dd7a72"
+  },
+  Repeat = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  Search = {
+    bg = "#d2b071",
+    bold = true,
+    fg = "#14181a"
+  },
+  SignColumn = {
+    fg = "#7d8385"
+  },
+  Special = {
+    fg = "#66c2b5"
+  },
+  SpecialChar = {
+    fg = "#d2b071"
+  },
+  SpecialKey = {
+    fg = "#7d8385"
+  },
+  SpellBad = {
+    sp = "#dd7a72",
+    undercurl = true
+  },
+  SpellCap = {
+    sp = "#d2b071",
+    undercurl = true
+  },
+  SpellLocal = {
+    sp = "#66c2b5",
+    undercurl = true
+  },
+  SpellRare = {
+    sp = "#a68fc0",
+    undercurl = true
+  },
+  Statement = {
+    bold = true,
+    fg = "#a68fc0"
+  },
+  StatusLine = {
+    bg = "#1c2022",
+    fg = "#d2dbdc"
+  },
+  StatusLineNC = {
+    bg = "#121517",
+    fg = "#7d8385"
+  },
+  StorageClass = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  String = {
+    fg = "#7cbfa0"
+  },
+  Structure = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  Substitute = {
+    bg = "#a68fc0",
+    bold = true,
+    fg = "#14181a"
+  },
+  TabLine = {
+    bg = "#121517",
+    fg = "#7d8385"
+  },
+  TabLineFill = {
+    bg = "#121517"
+  },
+  TabLineSel = {
+    bg = "#14181a",
+    bold = true,
+    fg = "#e5eded"
+  },
+  Tag = {
+    fg = "#729fc0"
+  },
+  TelescopeBorder = {
+    bg = "#1c2022",
+    fg = "#575c5e"
+  },
+  TelescopeMatching = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  TelescopeNormal = {
+    bg = "#1c2022",
+    fg = "#d2dbdc"
+  },
+  TelescopePromptBorder = {
+    bg = "#2f3335",
+    fg = "#2f3335"
+  },
+  TelescopePromptNormal = {
+    bg = "#2f3335",
+    fg = "#d2dbdc"
+  },
+  TelescopePromptPrefix = {
+    bg = "#2f3335",
+    fg = "#729fc0"
+  },
+  TelescopePromptTitle = {
+    bg = "#729fc0",
+    bold = true,
+    fg = "#14181a"
+  },
+  TelescopeResultsDiffAdd = {
+    fg = "#7cbfa0"
+  },
+  TelescopeResultsDiffChange = {
+    fg = "#d2b071"
+  },
+  TelescopeResultsDiffDelete = {
+    fg = "#dd7a72"
+  },
+  TelescopeSelection = {
+    bg = "#2f3335",
+    bold = true,
+    fg = "#e5eded"
+  },
+  TelescopeTitle = {
+    bg = "#1c2022",
+    bold = true,
+    fg = "#729fc0"
+  },
+  Title = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  Todo = {
+    bg = "#d2b071",
+    bold = true,
+    fg = "#14181a"
+  },
+  Type = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  Typedef = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  Underlined = {
+    fg = "#729fc0",
+    underline = true
+  },
+  VertSplit = {
+    fg = "#575c5e"
+  },
+  Visual = {
+    bg = "#2f3335"
+  },
+  VisualNOS = {
+    bg = "#2f3335"
+  },
+  WarningMsg = {
+    bold = true,
+    fg = "#d2b071"
+  },
+  WhichKey = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  WhichKeyDesc = {
+    fg = "#d2dbdc"
+  },
+  WhichKeyFloat = {
+    bg = "#1c2022"
+  },
+  WhichKeyGroup = {
+    fg = "#66c2b5"
+  },
+  WhichKeySeparator = {
+    fg = "#575c5e"
+  },
+  WhichKeyValue = {
+    fg = "#7d8385",
+    italic = true
+  },
+  Whitespace = {
+    fg = "#7d8385"
+  },
+  WildMenu = {
+    bg = "#2f3335",
+    bold = true,
+    fg = "#e5eded"
+  },
+  WinBar = {
+    bg = "#14181a",
+    bold = true,
+    fg = "#d2dbdc"
+  },
+  WinBarNC = {
+    bg = "#14181a",
+    fg = "#7d8385"
+  },
+  WinSeparator = {
+    fg = "#575c5e"
+  },
+  markdownBold = {
+    bold = true,
+    fg = "#e5eded"
+  },
+  markdownCode = {
+    fg = "#7cbfa0"
+  },
+  markdownCodeBlock = {
+    fg = "#7cbfa0"
+  },
+  markdownH1 = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  markdownH2 = {
+    bold = true,
+    fg = "#729fc0"
+  },
+  markdownH3 = {
+    bold = true,
+    fg = "#66c2b5"
+  },
+  markdownH4 = {
+    bold = true,
+    fg = "#7cbfa0"
+  },
+  markdownItalic = {
+    fg = "#d2dbdc",
+    italic = true
+  },
+  markdownLinkText = {
+    fg = "#729fc0",
+    underline = true
+  }
+}
