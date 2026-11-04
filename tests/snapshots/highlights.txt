@@ -110,7 +110,7 @@
     fg = "#d2dbdc"
   },
   ["@punctuation.delimiter"] = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   ["@punctuation.special"] = {
     fg = "#66c2b5"
@@ -137,7 +137,7 @@
     fg = "#d2b071"
   },
   ["@tag.delimiter"] = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   ["@type"] = {
     link = "Type"
@@ -192,18 +192,18 @@
     fg = "#66c2b5"
   },
   CmpItemMenu = {
-    fg = "#7d8385",
+    fg = "#9ca3a4",
     italic = true
   },
   ColorColumn = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   Comment = {
-    fg = "#7d8385",
+    fg = "#9ca3a4",
     italic = true
   },
   Conceal = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   Conditional = {
     bold = true,
@@ -222,10 +222,10 @@
     fg = "#14181a"
   },
   CursorColumn = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   CursorLine = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   CursorLineNr = {
     bold = true,
@@ -304,19 +304,19 @@
     fg = "#d2b071"
   },
   DiffAdd = {
-    bg = "#121517",
+    bg = "#101315",
     fg = "#7cbfa0"
   },
   DiffChange = {
-    bg = "#121517",
+    bg = "#101315",
     fg = "#d2b071"
   },
   DiffDelete = {
-    bg = "#121517",
+    bg = "#101315",
     fg = "#dd7a72"
   },
   DiffText = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true,
     fg = "#e5eded"
   },
@@ -325,7 +325,7 @@
     fg = "#729fc0"
   },
   EndOfBuffer = {
-    fg = "#121517"
+    fg = "#101315"
   },
   Error = {
     bold = true,
@@ -343,21 +343,21 @@
     fg = "#d2b071"
   },
   FloatBorder = {
-    bg = "#1c2022",
-    fg = "#575c5e"
+    bg = "#1c1f21",
+    fg = "#7e8384"
   },
   FloatTitle = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     bold = true,
     fg = "#729fc0"
   },
   FoldColumn = {
     bg = "#14181a",
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   Folded = {
-    bg = "#121517",
-    fg = "#7d8385",
+    bg = "#101315",
+    fg = "#9ca3a4",
     italic = true
   },
   Function = {
@@ -404,32 +404,32 @@
     fg = "#66c2b5"
   },
   LineNr = {
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   LspCodeLens = {
-    fg = "#7d8385",
+    fg = "#9ca3a4",
     italic = true
   },
   LspCodeLensSeparator = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   LspInlayHint = {
-    bg = "#121517",
-    fg = "#7d8385",
+    bg = "#101315",
+    fg = "#9ca3a4",
     italic = true
   },
   LspReferenceRead = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   LspReferenceText = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   LspReferenceWrite = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true
   },
   LspSignatureActiveParameter = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true,
     fg = "#e5eded"
   },
@@ -437,7 +437,7 @@
     fg = "#66c2b5"
   },
   MatchParen = {
-    bg = "#575c5e",
+    bg = "#7e8384",
     bold = true,
     fg = "#e5eded"
   },
@@ -454,18 +454,18 @@
     fg = "#d2dbdc"
   },
   NonText = {
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   Normal = {
     bg = "#14181a",
     fg = "#d2dbdc"
   },
   NormalFloat = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     fg = "#d2dbdc"
   },
   NormalNC = {
-    bg = "#121517",
+    bg = "#101315",
     fg = "#d2dbdc"
   },
   Number = {
@@ -475,19 +475,19 @@
     fg = "#66c2b5"
   },
   Pmenu = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     fg = "#d2dbdc"
   },
   PmenuSbar = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   PmenuSel = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true,
     fg = "#e5eded"
   },
   PmenuThumb = {
-    bg = "#575c5e"
+    bg = "#7e8384"
   },
   PreCondit = {
     fg = "#66c2b5"
@@ -512,7 +512,7 @@
     fg = "#14181a"
   },
   SignColumn = {
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   Special = {
     fg = "#66c2b5"
@@ -521,7 +521,7 @@
     fg = "#d2b071"
   },
   SpecialKey = {
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   SpellBad = {
     sp = "#dd7a72",
@@ -544,12 +544,12 @@
     fg = "#a68fc0"
   },
   StatusLine = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     fg = "#d2dbdc"
   },
   StatusLineNC = {
-    bg = "#121517",
-    fg = "#7d8385"
+    bg = "#101315",
+    fg = "#9ca3a4"
   },
   StorageClass = {
     bold = true,
@@ -568,11 +568,11 @@
     fg = "#14181a"
   },
   TabLine = {
-    bg = "#121517",
-    fg = "#7d8385"
+    bg = "#101315",
+    fg = "#9ca3a4"
   },
   TabLineFill = {
-    bg = "#121517"
+    bg = "#101315"
   },
   TabLineSel = {
     bg = "#14181a",
@@ -583,27 +583,27 @@
     fg = "#729fc0"
   },
   TelescopeBorder = {
-    bg = "#1c2022",
-    fg = "#575c5e"
+    bg = "#1c1f21",
+    fg = "#7e8384"
   },
   TelescopeMatching = {
     bold = true,
     fg = "#729fc0"
   },
   TelescopeNormal = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     fg = "#d2dbdc"
   },
   TelescopePromptBorder = {
-    bg = "#2f3335",
-    fg = "#2f3335"
+    bg = "#373939",
+    fg = "#373939"
   },
   TelescopePromptNormal = {
-    bg = "#2f3335",
+    bg = "#373939",
     fg = "#d2dbdc"
   },
   TelescopePromptPrefix = {
-    bg = "#2f3335",
+    bg = "#373939",
     fg = "#729fc0"
   },
   TelescopePromptTitle = {
@@ -621,12 +621,12 @@
     fg = "#dd7a72"
   },
   TelescopeSelection = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true,
     fg = "#e5eded"
   },
   TelescopeTitle = {
-    bg = "#1c2022",
+    bg = "#1c1f21",
     bold = true,
     fg = "#729fc0"
   },
@@ -652,13 +652,13 @@
     underline = true
   },
   VertSplit = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   Visual = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   VisualNOS = {
-    bg = "#2f3335"
+    bg = "#373939"
   },
   WarningMsg = {
     bold = true,
@@ -672,23 +672,23 @@
     fg = "#d2dbdc"
   },
   WhichKeyFloat = {
-    bg = "#1c2022"
+    bg = "#1c1f21"
   },
   WhichKeyGroup = {
     fg = "#66c2b5"
   },
   WhichKeySeparator = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   WhichKeyValue = {
-    fg = "#7d8385",
+    fg = "#9ca3a4",
     italic = true
   },
   Whitespace = {
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   WildMenu = {
-    bg = "#2f3335",
+    bg = "#373939",
     bold = true,
     fg = "#e5eded"
   },
@@ -699,10 +699,10 @@
   },
   WinBarNC = {
     bg = "#14181a",
-    fg = "#7d8385"
+    fg = "#9ca3a4"
   },
   WinSeparator = {
-    fg = "#575c5e"
+    fg = "#7e8384"
   },
   markdownBold = {
     bold = true,

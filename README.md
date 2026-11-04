@@ -50,6 +50,20 @@ If the terminal does not answer OSC 10 and 11, the plugin uses ANSI colors 7 and
 
 The temporary response handlers are removed when the query finishes. There is no watcher or polling. If a complete ANSI palette cannot be read, the previous highlights are kept and a warning is shown.
 
+### Derived colors
+
+Surface shades use [Material 3's surface tone spacing](https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md#using-surface-colors), measured on the CIELAB L* scale (0 is black, 100 is white). The tones are shifted relative to the terminal background:
+
+| Surface | Dark theme offset | Light theme offset |
+| --- | --- | --- |
+| Recessed | -2 | +2 |
+| Raised | +4 | -2 |
+| Selection | +16 | -8 |
+
+The deeper surface repeats the recessed step. This is a Material-inspired adaptation: the terminal background stays unchanged, and the generated shades are mixed in linear RGB. Surface tones are limited to retain 4.5:1 foreground contrast, or the terminal's original contrast if lower.
+
+Derived comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18), and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), against the least contrasting surface. Blend amounts are calculated from WCAG relative luminance. If the terminal foreground cannot reach a target, it is used unchanged. ANSI colors are preserved; these targets do not imply WCAG compliance for every highlight group.
+
 ## Development
 
 Run the tests with `make test`. Update the highlight snapshot with `make snapshot`.

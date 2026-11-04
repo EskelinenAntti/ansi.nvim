@@ -1,35 +1,5 @@
 local M = {}
-
----@param color string
----@return number[]
-local function channels(color)
-	return {
-		tonumber(color:sub(2, 3), 16),
-		tonumber(color:sub(4, 5), 16),
-		tonumber(color:sub(6, 7), 16),
-	}
-end
-
----@param from string
----@param to string
----@param amount number
----@return string
-local function blend(from, to, amount)
-	local a, b = channels(from), channels(to)
-	return string.format(
-		"#%02x%02x%02x",
-		math.floor(a[1] + (b[1] - a[1]) * amount + 0.5),
-		math.floor(a[2] + (b[2] - a[2]) * amount + 0.5),
-		math.floor(a[3] + (b[3] - a[3]) * amount + 0.5)
-	)
-end
-
----@param color string
----@return number
-local function brightness(color)
-	local rgb = channels(color)
-	return 0.299 * rgb[1] + 0.587 * rgb[2] + 0.114 * rgb[3]
-end
+local color = require("ansi.color")
 
 ---Map the terminal's ANSI colors and default colors into Palette.
 ---@param colors table Raw terminal colors, with ANSI indices starting at 0
@@ -37,21 +7,54 @@ end
 function M.palette_for(colors)
 	local background = colors.background or colors[0]
 	local foreground = colors.foreground or colors[7]
-	local mode = brightness(background) > brightness(foreground) and "light" or "dark"
-	local edge = mode == "light" and "#ffffff" or "#000000"
+	local bg, fg = color.luminance(background), color.luminance(foreground)
+	local mode = bg > fg and "light" or "dark"
+
+	-- Material 3 surface tones, translated relative to the terminal's own background tone.
+	-- https://github.com/material-components/material-components-android/blob/master/docs/theming/Color.md
+	local tones = mode == "dark" and { surface = 6, lowest = 4, low = 10, highest = 22 }
+		or { surface = 98, lowest = 100, low = 96, highest = 90 }
+	local tone = color.tone(background)
+
+	-- Surface changes must retain 4.5:1 foreground contrast, or the original contrast if lower.
+	local minimum = math.min(4.5, color.contrast(background, foreground))
+	local limit = mode == "dark" and (fg + 0.05) / minimum - 0.05 or minimum * (fg + 0.05) - 0.05
+	local limit_tone = color.tone_for_luminance(limit)
+	local function surface(target)
+		target = tone + target - tones.surface
+		target = mode == "dark" and math.min(target, limit_tone) or math.max(target, limit_tone)
+		return color.with_tone(background, target, mode == "dark" and "down" or "up")
+	end
+
+	local dark_background = surface(tones.lowest)
+	-- Repeat the lowest-surface step for the deeper surface role.
+	local darker_background = surface(tones.lowest + tones.lowest - tones.surface)
+	local lighter_background = surface(tones.low)
+	local selection = surface(tones.highest)
+
+	-- Use the least contrasting surface so derived text also works in menus and selections.
+	local text_background = background
+	for _, candidate in ipairs({ dark_background, lighter_background, selection }) do
+		if color.contrast(candidate, foreground) < color.contrast(text_background, foreground) then
+			text_background = candidate
+		end
+	end
+	-- WCAG targets: 3:1 for muted UI and 4.5:1 for regular text.
+	local muted = color.for_contrast(text_background, foreground, 3)
+	local light_foreground = color.for_contrast(text_background, foreground, 4.5)
 
 	return {
 		mode = mode,
 		accent = colors[4],
-		selection = blend(background, foreground, 0.14),
-		muted = blend(background, foreground, 0.35),
+		selection = selection,
+		muted = muted,
 		background = background,
-		dark_background = blend(background, edge, 0.12),
-		darker_background = blend(background, edge, 0.24),
-		lighter_background = blend(background, foreground, 0.04),
+		dark_background = dark_background,
+		darker_background = darker_background,
+		lighter_background = lighter_background,
 		foreground = foreground,
-		dark_foreground = blend(background, foreground, 0.35),
-		light_foreground = blend(background, foreground, 0.55),
+		dark_foreground = muted,
+		light_foreground = light_foreground,
 		bright_foreground = mode == "light" and foreground or colors[15],
 		red = colors[1],
 		green = colors[2],
