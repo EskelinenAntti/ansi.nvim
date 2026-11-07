@@ -1,7 +1,7 @@
 return {
 	["Relative luminance and contrast match WCAG reference colors"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		local samples = {
 			{ "#000000", 0 },
 			{ "#ffffff", 1 },
@@ -24,7 +24,7 @@ return {
 
 	["CIELAB tones match the neutral reference scale"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 
 		-- Then
 		assert(color.tone("#000000") == 0)
@@ -35,7 +35,7 @@ return {
 
 	["Tone adjustments stay in gamut and reach the requested perceptual lightness"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		local sources = { "#000000", "#ffffff", "#ff0000", "#005577", "#ffeecc" }
 
 		for _, source in ipairs(sources) do
@@ -56,7 +56,7 @@ return {
 
 	["Derived text meets contrast targets after rounding to 8-bit RGB"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		local pairs = {
 			{ "#000000", "#ffffff" },
 			{ "#ffffff", "#000000" },
@@ -80,7 +80,7 @@ return {
 
 	["Unreachable contrast targets preserve the terminal foreground"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 
 		-- When
 		local low_contrast = color.for_contrast("#444444", "#555555", 4.5)

@@ -1,5 +1,5 @@
 local M = {}
-local color = require("ansi.color")
+local color = require("chameleon.color")
 
 ---Map the terminal's ANSI colors and default colors into Palette.
 ---@param colors table Raw terminal colors, with ANSI indices starting at 0

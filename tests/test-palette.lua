@@ -4,7 +4,7 @@ return {
 		local colors = vim.deepcopy(require("tests.current.colors"))
 
 		-- When
-		local got = require("ansi.palette").palette_for(colors)
+		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
 		assert(got.background == colors.background)
@@ -25,7 +25,7 @@ return {
 		colors.foreground = nil
 
 		-- When
-		local got = require("ansi.palette").palette_for(colors)
+		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
 		assert(got.background == colors[0])
@@ -39,12 +39,12 @@ return {
 		colors.foreground = "#000000"
 
 		-- When
-		local got = require("ansi.palette").palette_for(colors)
+		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
 		assert(got.mode == "light")
 		assert(got.bright_foreground == "#000000")
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		assert(math.abs(color.tone(got.selection) - 92) < 0.5)
 		assert(math.abs(color.tone(got.lighter_background) - 98) < 0.5)
 		assert(color.contrast(got.selection, got.light_foreground) >= 4.5)
@@ -53,11 +53,11 @@ return {
 	["Dark surfaces follow Material tonal spacing relative to the terminal background"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		local baseline = color.tone(colors.background)
 
 		-- When
-		local got = require("ansi.palette").palette_for(colors)
+		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
 		assert(math.abs(color.tone(got.lighter_background) - baseline - 4) < 0.5)
@@ -68,7 +68,7 @@ return {
 
 	["Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes"] = function()
 		-- Given
-		local color = require("ansi.color")
+		local color = require("chameleon.color")
 		local pairs = {
 			{ "#000000", "#ffffff" },
 			{ "#ffffff", "#000000" },
@@ -86,7 +86,7 @@ return {
 			colors.background, colors.foreground = pair[1], pair[2]
 
 			-- When
-			local got = require("ansi.palette").palette_for(colors)
+			local got = require("chameleon.palette").palette_for(colors)
 
 			-- Then
 			assert(got.background == pair[1] and got.foreground == pair[2])
@@ -113,7 +113,7 @@ return {
 		colors.foreground = "#777777"
 
 		-- When
-		local got = require("ansi.palette").palette_for(colors)
+		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
 		assert(got.mode == "light")

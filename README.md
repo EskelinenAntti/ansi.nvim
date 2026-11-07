@@ -1,4 +1,4 @@
-# ansi.nvim 🎨
+# chameleon.nvim 🦎
 
 A standalone Neovim colorscheme plugin that uses the active terminal theme colors, in [Rex](https://www.superlogical.com/rex) and other compatible terminals.
 
@@ -11,15 +11,15 @@ Main features:
 ## Requirements
 
 - Neovim 0.12 or later.
-- A terminal that supports ANSI palette queries using OSC 4.
+- A terminal that supports palette queries using OSC 4.
 
 ## Installation with vim.pack (Neovim built-in plugin manager)
 
 Add these two lines to your init.lua file and you are good to go.
 
 ```lua
-vim.pack.add({"https://github.com/EskelinenAntti/ansi.nvim"})
-vim.cmd.colorscheme("ansi")
+vim.pack.add({"https://github.com/EskelinenAntti/chameleon.nvim"})
+vim.cmd.colorscheme("chameleon")
 ```
 
 <details>
@@ -28,8 +28,8 @@ vim.cmd.colorscheme("ansi")
     <p>
     To use the plugin
     <ol>
-        <li>Install the <code>EskelinenAntti/ansi.nvim</code> plugin following the usual steps of your chosen plugin manager.</li>
-        <li>Set colorscheme to "ansi" with <code>vim.cmd.colorscheme("ansi")</code>.</li>
+        <li>Install the <code>EskelinenAntti/chameleon.nvim</code> plugin following the usual steps of your chosen plugin manager.</li>
+        <li>Set colorscheme to "chameleon" with <code>vim.cmd.colorscheme("chameleon")</code>.</li>
     </ol>
     </p>
 </details>
@@ -45,21 +45,21 @@ Functions and types use regular weight. The active line uses a subtle raised sur
 Loading the colorscheme enables `cursorline`. To disable it, set the option after loading the colorscheme:
 
 ```lua
-vim.cmd.colorscheme("ansi")
+vim.cmd.colorscheme("chameleon")
 vim.opt.cursorline = false
 ```
 
 ## Changing themes
 
-The palette is read once when the colorscheme loads. After changing your terminal theme, restart Neovim or run `:colorscheme ansi` to update the colors.
+The palette is read once when the colorscheme loads. After changing your terminal theme, restart Neovim or run `:colorscheme chameleon` to update the colors.
 
 ## How it works
 
-The plugin queries the terminal's 16 ANSI colors using OSC 4, and its default foreground and background using OSC 10 and 11. Neovim's `nvim_ui_send()` sends the queries, and `TermResponse` receives the colors asynchronously. No Rex CLI, configuration files, or additional plugins are needed.
+The plugin queries the terminal's 16 palette colors using OSC 4, and its default foreground and background using OSC 10 and 11. Neovim's `nvim_ui_send()` sends the queries, and `TermResponse` receives the colors asynchronously. No Rex CLI, configuration files, or additional plugins are needed.
 
-If the terminal does not answer OSC 10 and 11, the plugin uses ANSI colors 7 and 0 for foreground and background. These can differ from the terminal's actual default colors. UI surfaces and selection colors are derived from the palette; ANSI yellow is also used for orange highlights.
+If the terminal does not answer OSC 10 and 11, the plugin uses palette colors 7 and 0 for foreground and background. These can differ from the terminal's actual default colors. UI surfaces and selection colors are derived from the palette; terminal yellow is also used for orange highlights.
 
-The temporary response handlers are removed when the query finishes. There is no watcher or polling. If a complete ANSI palette cannot be read, the previous highlights are kept and a warning is shown.
+The temporary response handlers are removed when the query finishes. There is no watcher or polling. If a complete terminal palette cannot be read, the previous highlights are kept and a warning is shown.
 
 ### Derived colors
 
@@ -73,7 +73,7 @@ Surface shades use [Material 3's surface tone spacing](https://github.com/materi
 
 The deeper surface repeats the recessed step. This is a Material-inspired adaptation: the terminal background stays unchanged, and the generated shades are mixed in linear RGB. Surface tones are limited to retain 4.5:1 foreground contrast, or the terminal's original contrast if lower.
 
-Derived comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18), and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), against the least contrasting surface. Blend amounts are calculated from WCAG relative luminance. If the terminal foreground cannot reach a target, it is used unchanged. ANSI colors are preserved; these targets do not imply WCAG compliance for every highlight group.
+Derived comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18), and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), against the least contrasting surface. Blend amounts are calculated from WCAG relative luminance. If the terminal foreground cannot reach a target, it is used unchanged. Palette colors are preserved; these targets do not imply WCAG compliance for every highlight group.
 
 ## Development
 

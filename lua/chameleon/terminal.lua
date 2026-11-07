@@ -5,7 +5,7 @@ M.colors = nil
 
 local pending
 local timeout
-local group = vim.api.nvim_create_augroup("ansi-query", { clear = true })
+local group = vim.api.nvim_create_augroup("chameleon-query", { clear = true })
 
 ---Parse a terminal color response. Neovim strips the string terminator from TermResponse events.
 ---@param sequence string

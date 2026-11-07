@@ -37,8 +37,8 @@ end
 
 return {
 	before = function()
-		require("ansi.terminal").cancel()
-		require("ansi.terminal").colors = nil
+		require("chameleon.terminal").cancel()
+		require("chameleon.terminal").colors = nil
 		cursorline = vim.opt.cursorline:get()
 		vim.opt.cursorline = false
 		term_program = vim.env.TERM_PROGRAM
@@ -53,7 +53,7 @@ return {
 	end,
 
 	after = function()
-		require("ansi.terminal").cancel()
+		require("chameleon.terminal").cancel()
 		vim.api.nvim_ui_send = send
 		vim.api.nvim_list_uis = list_uis
 		vim.env.TERM_PROGRAM = term_program
@@ -63,7 +63,7 @@ return {
 
 	["Loading the colorscheme enables the cursor line and allows a user override"] = function()
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(require("tests.current.colors"))
 
 		-- Then
@@ -79,14 +79,14 @@ return {
 
 	["Terminal theme colors are applied as Neovim highlights"] = function()
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(require("tests.current.colors"))
 
 		-- Then
 		local got = string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Normal" }).fg)
 		local want = "#d2dbdc"
 		assert(got == want, "got:" .. got .. ",want:" .. want)
-		assert(vim.g.colors_name == "ansi")
+		assert(vim.g.colors_name == "chameleon")
 		assert(vim.o.termguicolors)
 		assert(vim.g.terminal_color_1 == "#dd7a72")
 	end,
@@ -97,12 +97,12 @@ return {
 		vim.api.nvim_set_hl(0, "Normal", { fg = "#ffffff" })
 
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(require("tests.current.colors"))
 
 		-- Then
 		assert(vim.api.nvim_get_hl(0, { name = "Normal" }).fg == 0xd2dbdc)
-		assert(vim.g.colors_name == "ansi")
+		assert(vim.g.colors_name == "chameleon")
 	end,
 
 	["Previous highlights set by other themes are cleared"] = function()
@@ -110,7 +110,7 @@ return {
 		vim.api.nvim_set_hl(0, "HighlightGroupToClear", { fg = "#ffffff" })
 
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(require("tests.current.colors"))
 
 		-- Then
@@ -124,7 +124,7 @@ return {
 		colors.foreground = "#222222"
 
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(colors)
 
 		-- Then
@@ -135,7 +135,7 @@ return {
 
 	["Switching colorscheme cancels the palette query and ignores late responses"] = function()
 		-- Given
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		vim.cmd.colorscheme("default")
 		local previous = vim.api.nvim_get_hl(0, { name = "Normal" })
 
@@ -145,12 +145,12 @@ return {
 		-- Then
 		assert(vim.g.colors_name == "default")
 		assert(vim.deep_equal(vim.api.nvim_get_hl(0, { name = "Normal" }), previous))
-		assert(#vim.api.nvim_get_autocmds({ group = "ansi-query" }) == 0)
+		assert(#vim.api.nvim_get_autocmds({ group = "chameleon-query" }) == 0)
 	end,
 
 	["Palette changes are only read when the colorscheme is loaded again"] = function()
 		-- Given
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(require("tests.current.colors"))
 		local updated = vim.deepcopy(require("tests.current.colors"))
 		updated.foreground = "#ffffff"
@@ -160,10 +160,10 @@ return {
 
 		-- Then
 		assert(vim.api.nvim_get_hl(0, { name = "Normal" }).fg == 0xd2dbdc)
-		assert(#vim.api.nvim_get_autocmds({ group = "ansi-query" }) == 0, "Palette listeners were left running")
+		assert(#vim.api.nvim_get_autocmds({ group = "chameleon-query" }) == 0, "Palette listeners were left running")
 
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 		respond(updated)
 
 		-- Then
@@ -181,7 +181,7 @@ return {
 		end
 
 		-- When
-		vim.cmd.colorscheme("ansi")
+		vim.cmd.colorscheme("chameleon")
 
 		-- Then
 		assert(queries == 0, "Queried before the TUI attached")

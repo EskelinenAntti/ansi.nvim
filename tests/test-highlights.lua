@@ -1,8 +1,8 @@
 local snapshot_path = "tests/snapshots/highlights.txt"
 
 local function snapshot()
-	local palette = require("ansi.palette").palette_for(require("tests.current.colors"))
-	local highlights = require("ansi.highlighter").highlights_for(palette)
+	local palette = require("chameleon.palette").palette_for(require("tests.current.colors"))
+	local highlights = require("chameleon.highlighter").highlights_for(palette)
 	return vim.inspect(highlights, { sort_keys = true }) .. "\n"
 end
 

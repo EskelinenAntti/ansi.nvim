@@ -1,6 +1,6 @@
 local M = {}
 
-M.name = "ansi"
+M.name = "chameleon"
 
 ---@param colors table
 local function apply_colors(colors)
@@ -8,8 +8,8 @@ local function apply_colors(colors)
 		return
 	end
 
-	local palette = require("ansi.palette").palette_for(colors)
-	local highlights = require("ansi.highlighter").highlights_for(palette)
+	local palette = require("chameleon.palette").palette_for(colors)
+	local highlights = require("chameleon.highlighter").highlights_for(palette)
 
 	-- Changing 'background' can reload the active colorscheme. Set it before registering ours.
 	vim.g.colors_name = nil
@@ -30,11 +30,11 @@ end
 
 function M.apply()
 	if not vim.api.nvim_ui_send then
-		vim.notify("ansi.nvim requires Neovim 0.12 or later.", vim.log.levels.ERROR)
+		vim.notify("chameleon.nvim requires Neovim 0.12 or later.", vim.log.levels.ERROR)
 		return
 	end
 
-	local terminal = require("ansi.terminal")
+	local terminal = require("chameleon.terminal")
 	terminal.cancel()
 	vim.g.colors_name = M.name
 	vim.opt.cursorline = true
