@@ -1,4 +1,5 @@
 local M = {}
+local color = require("chameleon.color")
 ---@class Palette
 ---@field mode "dark"|"light"
 ---@field accent string
@@ -30,12 +31,29 @@ local M = {}
 ---@param p Palette
 ---@return table<string, vim.api.keyset.highlight>
 function M.highlights_for(p)
+	-- Contrast-limited palettes can leave the selection surface nearly identical to the editor.
+	local weak_selection = math.abs(color.tone(p.selection) - color.tone(p.background)) < 2
+	local selection_fg = weak_selection and p.background or p.foreground
+	local selection_bg = weak_selection and p.foreground or p.selection
+
+	---Tint diff surfaces within the palette's selection contrast budget.
+	---@param accent string
+	---@param strength number
+	---@return string
+	local function diff_background(accent, strength)
+		local contrast = color.contrast(p.background, p.selection)
+		local tint = color.for_contrast(p.background, accent, 1 + (contrast - 1) * strength)
+		local tone = color.tone(p.background) + (color.tone(p.selection) - color.tone(p.background)) * strength
+		return color.with_tone(tint, tone, p.mode == "dark" and "down" or "up")
+	end
+
 	local highlights = {
 		Added = { fg = p.green },
 		Boolean = { fg = p.orange },
 		Changed = { fg = p.yellow },
 		Character = { fg = p.green },
 		CmpItemAbbr = { fg = p.foreground },
+		CmpItemAbbrDeprecated = { fg = p.light_foreground, strikethrough = true },
 		CmpItemAbbrMatch = { fg = p.accent, bold = true },
 		CmpItemAbbrMatchFuzzy = { fg = p.accent, bold = true },
 		CmpItemKind = { fg = p.cyan },
@@ -45,7 +63,7 @@ function M.highlights_for(p)
 		Conceal = { fg = p.muted },
 		Conditional = { fg = p.magenta },
 		Constant = { fg = p.orange },
-		CurSearch = { fg = p.orange, bold = true, reverse = true },
+		CurSearch = { fg = p.background, bg = p.accent, bold = true },
 		Cursor = { fg = p.background, bg = p.bright_foreground },
 		CursorColumn = { bg = p.lighter_background },
 		CursorLine = { bg = p.lighter_background },
@@ -71,10 +89,10 @@ function M.highlights_for(p)
 		DiagnosticVirtualTextOk = { fg = p.green, italic = true },
 		DiagnosticVirtualTextWarn = { fg = p.yellow, italic = true },
 		DiagnosticWarn = { fg = p.yellow },
-		DiffAdd = { fg = p.green, bg = p.dark_background },
-		DiffChange = { fg = p.yellow, bg = p.dark_background },
-		DiffDelete = { fg = p.red, bg = p.dark_background },
-		DiffText = { fg = p.bright_foreground, bg = p.selection, bold = true },
+		DiffAdd = { bg = diff_background(p.green, 0.5) },
+		DiffChange = { bg = diff_background(p.yellow, 0.5) },
+		DiffDelete = { fg = p.red, bg = diff_background(p.red, 0.5) },
+		DiffText = { fg = p.foreground, bg = diff_background(p.yellow, 1), bold = true },
 		Directory = { fg = p.blue, bold = true },
 		EndOfBuffer = { fg = p.dark_background },
 		Error = { fg = p.red, bold = true },
@@ -87,13 +105,16 @@ function M.highlights_for(p)
 		Folded = { fg = p.light_foreground, bg = p.dark_background, italic = true },
 		Function = { fg = p.blue },
 		GitSignsAdd = { fg = p.green },
+		GitSignsAddInline = { fg = p.foreground, bg = diff_background(p.green, 1), bold = true },
 		GitSignsChange = { fg = p.yellow },
+		GitSignsChangeInline = { link = "DiffText" },
 		GitSignsDelete = { fg = p.red },
+		GitSignsDeleteInline = { fg = p.foreground, bg = diff_background(p.red, 1), strikethrough = true },
 		HealthError = { fg = p.red, bold = true },
 		HealthSuccess = { fg = p.green, bold = true },
 		HealthWarning = { fg = p.yellow, bold = true },
 		Identifier = { fg = p.foreground },
-		IncSearch = { fg = p.orange, bold = true, reverse = true },
+		IncSearch = { link = "CurSearch" },
 		Include = { fg = p.cyan },
 		Keyword = { fg = p.magenta },
 		Label = { fg = p.cyan },
@@ -101,9 +122,9 @@ function M.highlights_for(p)
 		LspCodeLens = { fg = p.light_foreground, italic = true },
 		LspCodeLensSeparator = { fg = p.muted },
 		LspInlayHint = { fg = p.light_foreground, bg = p.dark_background, italic = true },
-		LspReferenceRead = { bg = p.selection },
-		LspReferenceText = { bg = p.selection },
-		LspReferenceWrite = { bg = p.selection, bold = true },
+		LspReferenceRead = { bg = p.selection, underline = weak_selection or nil },
+		LspReferenceText = { bg = p.selection, underline = weak_selection or nil },
+		LspReferenceWrite = { bg = p.selection, bold = true, underline = weak_selection or nil },
 		LspSignatureActiveParameter = { fg = p.bright_foreground, bg = p.selection, bold = true },
 		Macro = { fg = p.cyan },
 		MatchParen = { fg = p.foreground, bg = p.selection, bold = true, underline = true },
@@ -117,12 +138,19 @@ function M.highlights_for(p)
 		Number = { fg = p.orange },
 		Operator = { fg = p.cyan },
 		Pmenu = { fg = p.foreground, bg = p.lighter_background },
+		PmenuExtra = { fg = p.light_foreground, italic = true },
+		PmenuExtraSel = { fg = p.light_foreground, italic = true },
+		PmenuKind = { fg = p.cyan },
+		PmenuKindSel = { fg = p.foreground },
+		PmenuMatch = { fg = p.accent, bold = true },
+		PmenuMatchSel = { fg = p.accent, bold = true },
 		PmenuSbar = { bg = p.selection },
-		PmenuSel = { fg = p.bright_foreground, bg = p.selection, bold = true },
+		PmenuSel = { fg = p.foreground, bg = p.selection, underline = weak_selection or nil },
 		PmenuThumb = { bg = p.muted },
 		PreCondit = { fg = p.cyan },
 		PreProc = { fg = p.cyan },
 		Question = { fg = p.green, bold = true },
+		QuickFixLine = { fg = p.foreground, bg = p.selection, underline = weak_selection or nil },
 		Removed = { fg = p.red },
 		Repeat = { fg = p.magenta },
 		Search = { fg = p.background, bg = p.yellow, bold = true },
@@ -146,7 +174,7 @@ function M.highlights_for(p)
 		TabLineSel = { fg = p.bright_foreground, bg = p.background, bold = true },
 		Tag = { fg = p.blue },
 		TelescopeBorder = { fg = p.muted, bg = p.lighter_background },
-		TelescopeMatching = { fg = p.blue, bold = true },
+		TelescopeMatching = { fg = p.accent, bold = true },
 		TelescopeNormal = { fg = p.foreground, bg = p.lighter_background },
 		TelescopePromptBorder = { fg = p.selection, bg = p.selection },
 		TelescopePromptNormal = { fg = p.foreground, bg = p.selection },
@@ -155,7 +183,7 @@ function M.highlights_for(p)
 		TelescopeResultsDiffAdd = { fg = p.green },
 		TelescopeResultsDiffChange = { fg = p.yellow },
 		TelescopeResultsDiffDelete = { fg = p.red },
-		TelescopeSelection = { fg = p.bright_foreground, bg = p.selection, bold = true },
+		TelescopeSelection = { fg = p.foreground, bg = p.selection, underline = weak_selection or nil },
 		TelescopeTitle = { fg = p.accent, bg = p.lighter_background, bold = true },
 		Title = { fg = p.accent, bold = true },
 		Todo = { fg = p.background, bg = p.yellow, bold = true },
@@ -163,8 +191,8 @@ function M.highlights_for(p)
 		Typedef = { fg = p.yellow },
 		Underlined = { fg = p.blue, underline = true },
 		VertSplit = { fg = p.muted },
-		Visual = { bg = p.selection },
-		VisualNOS = { bg = p.selection },
+		Visual = { fg = selection_fg, bg = selection_bg },
+		VisualNOS = { fg = selection_fg, bg = selection_bg },
 		WarningMsg = { fg = p.yellow, bold = true },
 		WhichKey = { fg = p.accent, bold = true },
 		WhichKeyDesc = { fg = p.foreground },
@@ -216,7 +244,7 @@ function M.highlights_for(p)
 		["@string.documentation"] = { fg = p.green, italic = true },
 		["@string.escape"] = { fg = p.orange, bold = true },
 		["@string.special"] = { fg = p.cyan },
-		["@tag"] = { fg = p.blue, bold = true },
+		["@tag"] = { fg = p.blue },
 		["@tag.attribute"] = { fg = p.yellow },
 		["@tag.delimiter"] = { fg = p.muted },
 		["@type"] = { link = "Type" },

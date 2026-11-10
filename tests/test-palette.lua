@@ -3,6 +3,8 @@ return {
 	["Terminal ANSI colors are mapped to the same highlight palette as the other themes"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors.background = "#000000"
+		local source = vim.deepcopy(colors)
 
 		-- When
 		local got = require("chameleon.palette").palette_for(colors)
@@ -16,7 +18,7 @@ return {
 		assert(got.orange == colors[3])
 		assert(got.bright_cyan == colors[14])
 		assert(got.mode == "dark")
-		assert(vim.deep_equal(colors, require("tests.current.colors")), "Source colors were modified")
+		assert(vim.deep_equal(colors, source), "Source colors were modified")
 	end,
 
 	---Verify: Use ANSI background and foreground when the terminal does not answer OSC 10 and 11.
@@ -84,6 +86,8 @@ return {
 			{ "#444444", "#555555" },
 			{ "#555555", "#444444" },
 			{ "#444444", "#444444" },
+			{ "#444444", "#ebdbb2" },
+			{ "#666666", "#ebdbb2" },
 		}
 
 		for _, pair in ipairs(pairs) do
@@ -108,7 +112,43 @@ return {
 				assert(color.contrast(surface, got.light_foreground) >= math.min(4.5, available) - 0.000001)
 				assert(color.contrast(surface, got.muted) >= math.min(3, available) - 0.000001)
 			end
+			for _, role in ipairs({ "red", "green", "yellow", "blue", "magenta", "cyan", "accent" }) do
+				local available = color.contrast(got.lighter_background, pair[2])
+				assert(
+					color.contrast(got.lighter_background, got[role]) >= math.min(4.5, available),
+					role .. " lost contrast"
+				)
+			end
+			local highlights = require("chameleon.highlighter").highlights_for(got)
+			for _, group in ipairs({ "DiffAdd", "DiffChange", "DiffDelete", "DiffText" }) do
+				assert(color.contrast(highlights[group].bg, pair[2]) >= minimum - 0.000001, group .. " lost contrast")
+			end
 		end
+	end,
+
+	---Verify: Low-contrast light accents are corrected without changing readable colors or terminal colors.
+	["Low-contrast light accents are corrected while readable colors are preserved"] = function()
+		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors.background, colors.foreground = "#eff1f5", "#4c4f69"
+		colors[5], colors[4] = "#ea76cb", "#1e40af"
+		local source = vim.deepcopy(colors)
+
+		local got = require("chameleon.palette").palette_for(colors)
+
+		assert(require("chameleon.color").contrast(got.lighter_background, got.magenta) >= 4.5)
+		assert(got.magenta ~= colors[5])
+		assert(got.blue == colors[4])
+		assert(vim.deep_equal(colors, source), "Terminal colors were modified")
+	end,
+
+	---Verify: An unusually dark ANSI white cannot reduce emphasized text contrast.
+	["Emphasized text never falls back to unreadable ANSI white"] = function()
+		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors[15] = colors.background
+
+		local got = require("chameleon.palette").palette_for(colors)
+
+		assert(got.bright_foreground == colors.foreground)
 	end,
 
 	---Verify: Theme mode uses linear-light luminance instead of encoded RGB brightness.

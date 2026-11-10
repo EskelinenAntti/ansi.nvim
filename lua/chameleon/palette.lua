@@ -46,9 +46,29 @@ function M.palette_for(colors)
 	local muted = color.for_contrast(text_background, foreground, 3)
 	local light_foreground = color.for_contrast(text_background, foreground, 4.5)
 
+	---Keep terminal hues, correcting only accents that would be hard to read.
+	---@param index integer
+	---@param surface_color string|nil
+	---@return string
+	local function syntax(index, surface_color)
+		surface_color = surface_color or lighter_background
+		local minimum_contrast = math.min(4.5, color.contrast(surface_color, foreground))
+		local value = colors[index]
+		if color.contrast(surface_color, value) >= minimum_contrast then
+			return value
+		end
+		local target = color.for_contrast(surface_color, foreground, minimum_contrast)
+		return color.with_tone(value, color.tone(target), mode == "dark" and "up" or "down")
+	end
+
+	local bright_foreground = mode == "light" and foreground or colors[15]
+	if color.contrast(text_background, bright_foreground) < color.contrast(text_background, foreground) then
+		bright_foreground = foreground
+	end
+
 	return {
 		mode = mode,
-		accent = colors[4],
+		accent = syntax(4, text_background),
 		selection = selection,
 		muted = muted,
 		background = background,
@@ -58,14 +78,14 @@ function M.palette_for(colors)
 		foreground = foreground,
 		dark_foreground = muted,
 		light_foreground = light_foreground,
-		bright_foreground = mode == "light" and foreground or colors[15],
-		red = colors[1],
-		green = colors[2],
-		yellow = colors[3],
-		orange = colors[3],
-		blue = colors[4],
-		magenta = colors[5],
-		cyan = colors[6],
+		bright_foreground = bright_foreground,
+		red = syntax(1),
+		green = syntax(2),
+		yellow = syntax(3),
+		orange = syntax(3),
+		blue = syntax(4),
+		magenta = syntax(5),
+		cyan = syntax(6),
 		bright_red = colors[9],
 		bright_green = colors[10],
 		bright_yellow = colors[11],

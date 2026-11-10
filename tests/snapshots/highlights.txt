@@ -71,7 +71,7 @@
   },
   ["@markup.heading"] = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@markup.italic"] = {
     fg = "#d2dbdc",
@@ -121,7 +121,6 @@
     fg = "#66c2b5"
   },
   ["@tag"] = {
-    bold = true,
     fg = "#729fc0"
   },
   ["@tag.attribute"] = {
@@ -169,13 +168,17 @@
   CmpItemAbbr = {
     fg = "#d2dbdc"
   },
+  CmpItemAbbrDeprecated = {
+    fg = "#9ca3a4",
+    strikethrough = true
+  },
   CmpItemAbbrMatch = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   CmpItemAbbrMatchFuzzy = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   CmpItemKind = {
     fg = "#66c2b5"
@@ -201,9 +204,9 @@
     fg = "#d2b071"
   },
   CurSearch = {
+    bg = "#80a7c5",
     bold = true,
-    fg = "#d2b071",
-    reverse = true
+    fg = "#14181a"
   },
   Cursor = {
     bg = "#e5eded",
@@ -218,7 +221,7 @@
   CursorLineNr = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Debug = {
     fg = "#dd7a72"
@@ -293,21 +296,19 @@
     fg = "#d2b071"
   },
   DiffAdd = {
-    bg = "#101315",
-    fg = "#7cbfa0"
+    bg = "#1c2a25"
   },
   DiffChange = {
-    bg = "#101315",
-    fg = "#d2b071"
+    bg = "#2b261e"
   },
   DiffDelete = {
-    bg = "#101315",
+    bg = "#362222",
     fg = "#dd7a72"
   },
   DiffText = {
-    bg = "#373939",
+    bg = "#403727",
     bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   Directory = {
     bold = true,
@@ -337,7 +338,7 @@
   FloatTitle = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   FoldColumn = {
     fg = "#7e8384"
@@ -353,11 +354,24 @@
   GitSignsAdd = {
     fg = "#7cbfa0"
   },
+  GitSignsAddInline = {
+    bg = "#273c34",
+    bold = true,
+    fg = "#d2dbdc"
+  },
   GitSignsChange = {
     fg = "#d2b071"
   },
+  GitSignsChangeInline = {
+    link = "DiffText"
+  },
   GitSignsDelete = {
     fg = "#dd7a72"
+  },
+  GitSignsDeleteInline = {
+    bg = "#512f2d",
+    fg = "#d2dbdc",
+    strikethrough = true
   },
   HealthError = {
     bold = true,
@@ -375,9 +389,7 @@
     fg = "#d2dbdc"
   },
   IncSearch = {
-    bold = true,
-    fg = "#d2b071",
-    reverse = true
+    link = "CurSearch"
   },
   Include = {
     fg = "#66c2b5"
@@ -464,13 +476,34 @@
     bg = "#1c1f21",
     fg = "#d2dbdc"
   },
+  PmenuExtra = {
+    fg = "#9ca3a4",
+    italic = true
+  },
+  PmenuExtraSel = {
+    fg = "#9ca3a4",
+    italic = true
+  },
+  PmenuKind = {
+    fg = "#66c2b5"
+  },
+  PmenuKindSel = {
+    fg = "#d2dbdc"
+  },
+  PmenuMatch = {
+    bold = true,
+    fg = "#80a7c5"
+  },
+  PmenuMatchSel = {
+    bold = true,
+    fg = "#80a7c5"
+  },
   PmenuSbar = {
     bg = "#373939"
   },
   PmenuSel = {
     bg = "#373939",
-    bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   PmenuThumb = {
     bg = "#7e8384"
@@ -484,6 +517,10 @@
   Question = {
     bold = true,
     fg = "#7cbfa0"
+  },
+  QuickFixLine = {
+    bg = "#373939",
+    fg = "#d2dbdc"
   },
   Removed = {
     fg = "#dd7a72"
@@ -570,7 +607,7 @@
   },
   TelescopeMatching = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopeNormal = {
     bg = "#1c1f21",
@@ -586,10 +623,10 @@
   },
   TelescopePromptPrefix = {
     bg = "#373939",
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopePromptTitle = {
-    bg = "#729fc0",
+    bg = "#80a7c5",
     bold = true,
     fg = "#14181a"
   },
@@ -604,17 +641,16 @@
   },
   TelescopeSelection = {
     bg = "#373939",
-    bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   TelescopeTitle = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Title = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Todo = {
     bg = "#d2b071",
@@ -635,10 +671,12 @@
     fg = "#7e8384"
   },
   Visual = {
-    bg = "#373939"
+    bg = "#373939",
+    fg = "#d2dbdc"
   },
   VisualNOS = {
-    bg = "#373939"
+    bg = "#373939",
+    fg = "#d2dbdc"
   },
   WarningMsg = {
     bold = true,
@@ -646,7 +684,7 @@
   },
   WhichKey = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   WhichKeyDesc = {
     fg = "#d2dbdc"
@@ -696,7 +734,7 @@
   },
   markdownH1 = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   markdownH2 = {
     bold = true,

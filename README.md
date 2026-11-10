@@ -73,7 +73,9 @@ Surface shades use [Material 3's surface tone spacing](https://github.com/materi
 
 The deeper surface repeats the recessed step. This is a Material-inspired adaptation: the terminal background stays unchanged, and the generated shades are mixed in linear RGB. Surface tones are limited to retain 4.5:1 foreground contrast, or the terminal's original contrast if lower.
 
-Derived comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18), and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html), against the least contrasting surface. Blend amounts are calculated from WCAG relative luminance. If the terminal foreground cannot reach a target, it is used unchanged. Palette colors are preserved; these targets do not imply WCAG compliance for every highlight group.
+Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Syntax accents target 4.5:1 on editor and float backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
+
+Diffs use subtle red, green, and yellow surfaces derived from the palette. Syntax colors remain visible on added and changed lines, with a stronger surface for changed words.
 
 ## Development
 
