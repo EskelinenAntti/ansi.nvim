@@ -12,8 +12,7 @@
     link = "Constant"
   },
   ["@constant.builtin"] = {
-    fg = "#d2b071",
-    italic = true
+    link = "Constant"
   },
   ["@constructor"] = {
     fg = "#d2b071"
@@ -72,6 +71,20 @@
   ["@markup.heading"] = {
     bold = true,
     fg = "#80a7c5"
+  },
+  ["@markup.heading.1.delimiter.vimdoc"] = {
+    bg = "#14181a",
+    fg = "#14181a",
+    nocombine = true,
+    sp = "#7e8384",
+    underdouble = true
+  },
+  ["@markup.heading.2.delimiter.vimdoc"] = {
+    bg = "#14181a",
+    fg = "#14181a",
+    nocombine = true,
+    sp = "#7e8384",
+    underline = true
   },
   ["@markup.italic"] = {
     fg = "#d2dbdc",
@@ -133,8 +146,7 @@
     link = "Type"
   },
   ["@type.builtin"] = {
-    fg = "#d2b071",
-    italic = true
+    link = "Type"
   },
   ["@type.definition"] = {
     fg = "#d2b071"
@@ -143,8 +155,7 @@
     fg = "#d2dbdc"
   },
   ["@variable.builtin"] = {
-    fg = "#dd7a72",
-    italic = true
+    fg = "#dd7a72"
   },
   ["@variable.member"] = {
     fg = "#729fc0"
@@ -232,6 +243,9 @@
   Delimiter = {
     fg = "#d2dbdc"
   },
+  DiagnosticDeprecated = {
+    strikethrough = true
+  },
   DiagnosticError = {
     fg = "#dd7a72"
   },
@@ -266,6 +280,10 @@
   },
   DiagnosticUnderlineInfo = {
     sp = "#729fc0",
+    undercurl = true
+  },
+  DiagnosticUnderlineOk = {
+    sp = "#7cbfa0",
     undercurl = true
   },
   DiagnosticUnderlineWarn = {
@@ -334,6 +352,10 @@
   FloatBorder = {
     bg = "#1c1f21",
     fg = "#7e8384"
+  },
+  FloatShadow = {
+    bg = "#0b0e0f",
+    blend = 80
   },
   FloatTitle = {
     bg = "#1c1f21",
@@ -468,6 +490,9 @@
   },
   Number = {
     fg = "#d2b071"
+  },
+  OkMsg = {
+    fg = "#7cbfa0"
   },
   Operator = {
     fg = "#66c2b5"
@@ -755,5 +780,23 @@
   markdownLinkText = {
     fg = "#729fc0",
     underline = true
+  },
+  typescriptAliasDeclaration = {
+    link = "Type"
+  },
+  typescriptBraces = {
+    link = "Delimiter"
+  },
+  typescriptEndColons = {
+    link = "Delimiter"
+  },
+  typescriptInterfaceName = {
+    link = "Type"
+  },
+  typescriptTypeParameter = {
+    link = "Type"
+  },
+  typescriptTypeReference = {
+    link = "Type"
   }
 }
