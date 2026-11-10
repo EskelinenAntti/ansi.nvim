@@ -234,6 +234,10 @@ function M.highlights_for(p)
 		["@keyword.repeat"] = { fg = p.magenta },
 		["@keyword.return"] = { fg = p.magenta },
 		["@markup.heading"] = { fg = p.accent, bold = true },
+		["@markup.heading.1"] = { link = "markdownH1" },
+		["@markup.heading.2"] = { link = "markdownH2" },
+		["@markup.heading.3"] = { link = "markdownH3" },
+		["@markup.heading.4"] = { link = "markdownH4" },
 		["@markup.heading.1.delimiter.vimdoc"] = {
 			fg = p.background,
 			bg = p.background,

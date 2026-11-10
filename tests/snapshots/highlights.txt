@@ -72,6 +72,9 @@
     bold = true,
     fg = "#80a7c5"
   },
+  ["@markup.heading.1"] = {
+    link = "markdownH1"
+  },
   ["@markup.heading.1.delimiter.vimdoc"] = {
     bg = "#14181a",
     fg = "#14181a",
@@ -79,12 +82,21 @@
     sp = "#7e8384",
     underdouble = true
   },
+  ["@markup.heading.2"] = {
+    link = "markdownH2"
+  },
   ["@markup.heading.2.delimiter.vimdoc"] = {
     bg = "#14181a",
     fg = "#14181a",
     nocombine = true,
     sp = "#7e8384",
     underline = true
+  },
+  ["@markup.heading.3"] = {
+    link = "markdownH3"
+  },
+  ["@markup.heading.4"] = {
+    link = "markdownH4"
   },
   ["@markup.italic"] = {
     fg = "#d2dbdc",
