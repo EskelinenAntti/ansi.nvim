@@ -1,4 +1,5 @@
 return {
+	---Verify: Relative luminance and contrast match WCAG reference colors.
 	["Relative luminance and contrast match WCAG reference colors"] = function()
 		-- Given
 		local color = require("chameleon.color")
@@ -22,6 +23,7 @@ return {
 		assert(color.contrast("#777777", "#777777") == 1)
 	end,
 
+	---Verify: CIELAB tones match the neutral reference scale.
 	["CIELAB tones match the neutral reference scale"] = function()
 		-- Given
 		local color = require("chameleon.color")
@@ -33,6 +35,7 @@ return {
 		assert(color.with_tone("#000000", 50) == "#777777")
 	end,
 
+	---Verify: Tone adjustments stay in gamut and reach the requested perceptual lightness.
 	["Tone adjustments stay in gamut and reach the requested perceptual lightness"] = function()
 		-- Given
 		local color = require("chameleon.color")
@@ -54,6 +57,7 @@ return {
 		assert(color.with_tone("#ff0000", 0, "up") == "#000000")
 	end,
 
+	---Verify: Derived text meets contrast targets after rounding to 8-bit RGB.
 	["Derived text meets contrast targets after rounding to 8-bit RGB"] = function()
 		-- Given
 		local color = require("chameleon.color")
@@ -78,6 +82,7 @@ return {
 		end
 	end,
 
+	---Verify: Unreachable contrast targets preserve the terminal foreground.
 	["Unreachable contrast targets preserve the terminal foreground"] = function()
 		-- Given
 		local color = require("chameleon.color")

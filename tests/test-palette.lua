@@ -1,4 +1,5 @@
 return {
+	---Verify: Terminal ANSI colors are mapped to the same highlight palette as the other themes.
 	["Terminal ANSI colors are mapped to the same highlight palette as the other themes"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
@@ -18,6 +19,7 @@ return {
 		assert(vim.deep_equal(colors, require("tests.current.colors")), "Source colors were modified")
 	end,
 
+	---Verify: Use ANSI background and foreground when the terminal does not answer OSC 10 and 11.
 	["Use ANSI background and foreground when the terminal does not answer OSC 10 and 11"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
@@ -32,6 +34,7 @@ return {
 		assert(got.foreground == colors[7])
 	end,
 
+	---Verify: Light themes keep readable foregrounds and derive light surfaces.
 	["Light themes keep readable foregrounds and derive light surfaces"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
@@ -50,6 +53,7 @@ return {
 		assert(color.contrast(got.selection, got.light_foreground) >= 4.5)
 	end,
 
+	---Verify: Dark surfaces follow Material tonal spacing relative to the terminal background.
 	["Dark surfaces follow Material tonal spacing relative to the terminal background"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
@@ -66,6 +70,7 @@ return {
 		assert(math.abs(color.tone(got.darker_background) - baseline + 4) < 0.5)
 	end,
 
+	---Verify: Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes.
 	["Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes"] = function()
 		-- Given
 		local color = require("chameleon.color")
@@ -106,6 +111,7 @@ return {
 		end
 	end,
 
+	---Verify: Theme mode uses linear-light luminance instead of encoded RGB brightness.
 	["Theme mode uses linear-light luminance instead of encoded RGB brightness"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))

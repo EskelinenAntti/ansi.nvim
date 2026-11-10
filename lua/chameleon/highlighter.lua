@@ -26,8 +26,8 @@ local M = {}
 ---@field bright_blue string
 ---@field bright_magenta string
 
----Setup all highlight groups
----@param p Palette Configuration
+---Build highlight definitions from the palette.
+---@param p Palette
 ---@return table<string, vim.api.keyset.highlight>
 function M.highlights_for(p)
 	local highlights = {

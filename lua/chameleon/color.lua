@@ -2,6 +2,9 @@ local M = {}
 
 -- sRGB transfer functions and relative luminance from WCAG:
 -- https://www.w3.org/WAI/WCAG21/Techniques/general/G18
+---Convert an 8-bit sRGB channel to linear light.
+---@param channel number
+---@return number
 local function linear(channel)
 	channel = channel / 255
 	if channel <= 0.04045 then
@@ -10,6 +13,9 @@ local function linear(channel)
 	return ((channel + 0.055) / 1.055) ^ 2.4
 end
 
+---Decode a #RRGGBB color into linear RGB channels.
+---@param color string
+---@return number[]
 local function channels(color)
 	return {
 		linear(tonumber(color:sub(2, 3), 16)),
@@ -18,6 +24,10 @@ local function channels(color)
 	}
 end
 
+---Encode a linear channel as an 8-bit sRGB value.
+---@param channel number
+---@param rounding "up"|"down"|nil
+---@return integer
 local function encoded(channel, rounding)
 	channel = math.max(0, math.min(1, channel))
 	if channel == 0 or channel == 1 then
@@ -36,6 +46,7 @@ local function encoded(channel, rounding)
 	return math.floor(channel * 255 + 0.5)
 end
 
+---Return WCAG relative luminance (0–1) for a #RRGGBB color.
 ---@param color string
 ---@return number
 function M.luminance(color)
@@ -43,6 +54,7 @@ function M.luminance(color)
 	return 0.2126 * rgb[1] + 0.7152 * rgb[2] + 0.0722 * rgb[3]
 end
 
+---Return the WCAG contrast ratio of two #RRGGBB colors.
 ---@param first string
 ---@param second string
 ---@return number
@@ -53,6 +65,7 @@ end
 
 -- CIELAB L* (0..100), the tone scale used by Material Design.
 -- https://github.com/material-foundation/material-color-utilities/blob/main/typescript/utils/color_utils.ts
+---Convert relative luminance (0–1) to CIELAB tone (0–100).
 ---@param luminance number
 ---@return number
 function M.tone_for_luminance(luminance)
@@ -62,6 +75,7 @@ function M.tone_for_luminance(luminance)
 	return 116 * luminance ^ (1 / 3) - 16
 end
 
+---Convert CIELAB tone (clamped to 0–100) to relative luminance.
 ---@param tone number
 ---@return number
 local function luminance_for_tone(tone)
@@ -72,12 +86,19 @@ local function luminance_for_tone(tone)
 	return ((tone + 16) / 116) ^ 3
 end
 
+---Return the CIELAB tone (0–100) of a #RRGGBB color.
 ---@param color string
 ---@return number
 function M.tone(color)
 	return M.tone_for_luminance(M.luminance(color))
 end
 
+---Blend two #RRGGBB colors to the requested luminance.
+---@param from string
+---@param to string
+---@param luminance number
+---@param rounding "up"|"down"|nil
+---@return string
 local function at_luminance(from, to, luminance, rounding)
 	local a, b = channels(from), channels(to)
 	local first, last = M.luminance(from), M.luminance(to)

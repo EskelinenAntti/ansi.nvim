@@ -35,6 +35,9 @@ function M.parse_response(sequence)
 		return
 	end
 
+	---Scale a terminal hex channel to an 8-bit value.
+	---@param hex string
+	---@return integer
 	local function channel(hex)
 		return math.floor(tonumber(hex, 16) * 255 / (16 ^ #hex - 1) + 0.5)
 	end
@@ -42,6 +45,7 @@ function M.parse_response(sequence)
 	return key, string.format("#%02x%02x%02x", channel(r), channel(g), channel(b))
 end
 
+---Cancel the pending query and release its listeners and timer.
 function M.cancel()
 	pending = nil
 	vim.api.nvim_clear_autocmds({ group = group })
@@ -54,6 +58,7 @@ function M.cancel()
 	end
 end
 
+---Publish a complete ANSI palette or report missing colors.
 local function finish()
 	local request = pending
 	M.cancel()
@@ -72,6 +77,7 @@ local function finish()
 	request.callback(M.colors)
 end
 
+---Collect a color response and finish when all requested colors arrive.
 ---@param sequence string
 function M.receive(sequence)
 	if not pending then
@@ -103,6 +109,8 @@ function M.query(callback)
 	local request = pending
 	vim.api.nvim_create_autocmd("TermResponse", {
 		group = group,
+		---Collect the color carried by a terminal response event.
+		---@param event table
 		callback = function(event)
 			M.receive(event.data.sequence)
 		end,
@@ -115,11 +123,13 @@ function M.query(callback)
 	end
 	table.insert(queries, "\027]10;?\027\\\027]11;?\027\\")
 
+	---Send color queries and start the response timeout.
 	local function send()
 		if pending ~= request then
 			return
 		end
 		-- Allow optional OSC 10/11 responses time to arrive before falling back to ANSI defaults.
+		---Finish the current query after optional default colors have had time to arrive.
 		timeout = vim.defer_fn(function()
 			if pending == request then
 				finish()

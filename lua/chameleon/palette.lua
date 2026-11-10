@@ -20,6 +20,9 @@ function M.palette_for(colors)
 	local minimum = math.min(4.5, color.contrast(background, foreground))
 	local limit = mode == "dark" and (fg + 0.05) / minimum - 0.05 or minimum * (fg + 0.05) - 0.05
 	local limit_tone = color.tone_for_luminance(limit)
+	---Derive a surface color while preserving foreground contrast.
+	---@param target number Material surface tone (0–100)
+	---@return string
 	local function surface(target)
 		target = tone + target - tones.surface
 		target = mode == "dark" and math.min(target, limit_tone) or math.max(target, limit_tone)

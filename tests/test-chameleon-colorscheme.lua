@@ -4,6 +4,8 @@ local notify
 local list_uis
 local cursorline
 
+---Simulate terminal responses for a palette.
+---@param colors table
 local function respond(colors)
 	for index = 0, 15 do
 		local color = colors[index]
@@ -36,6 +38,7 @@ local function respond(colors)
 end
 
 return {
+	---Save editor state and prepare terminal mocks.
 	before = function()
 		require("chameleon.terminal").cancel()
 		require("chameleon.terminal").colors = nil
@@ -43,15 +46,19 @@ return {
 		vim.opt.cursorline = false
 		term_program = vim.env.TERM_PROGRAM
 		send = vim.api.nvim_ui_send
+		---Suppress terminal queries during the test.
 		vim.api.nvim_ui_send = function() end
 		notify = vim.notify
+		---Suppress notifications during the test.
 		vim.notify = function() end
 		list_uis = vim.api.nvim_list_uis
+		---Simulate the attached terminal UI state.
 		vim.api.nvim_list_uis = function()
 			return { { stdout_tty = true } }
 		end
 	end,
 
+	---Cancel pending queries and restore editor state.
 	after = function()
 		require("chameleon.terminal").cancel()
 		vim.api.nvim_ui_send = send
@@ -61,6 +68,7 @@ return {
 		vim.opt.cursorline = cursorline
 	end,
 
+	---Verify: Loading the colorscheme enables the cursor line and allows a user override.
 	["Loading the colorscheme enables the cursor line and allows a user override"] = function()
 		-- When
 		vim.cmd.colorscheme("chameleon")
@@ -77,6 +85,7 @@ return {
 		assert(not vim.wo.cursorline, "User override was reset")
 	end,
 
+	---Verify: Terminal theme colors are applied as Neovim highlights.
 	["Terminal theme colors are applied as Neovim highlights"] = function()
 		-- When
 		vim.cmd.colorscheme("chameleon")
@@ -91,6 +100,7 @@ return {
 		assert(vim.g.terminal_color_1 == "#dd7a72")
 	end,
 
+	---Verify: Terminal theme colors are applied outside of Rex.
 	["Terminal theme colors are applied outside of Rex"] = function()
 		-- Given
 		vim.env.TERM_PROGRAM = "another-terminal"
@@ -105,6 +115,7 @@ return {
 		assert(vim.g.colors_name == "chameleon")
 	end,
 
+	---Verify: Previous highlights set by other themes are cleared.
 	["Previous highlights set by other themes are cleared"] = function()
 		-- Given
 		vim.api.nvim_set_hl(0, "HighlightGroupToClear", { fg = "#ffffff" })
@@ -117,6 +128,7 @@ return {
 		assert(vim.api.nvim_get_hl(0, { name = "HighlightGroupToClear" }).fg == nil, "Highlights were not cleared")
 	end,
 
+	---Verify: Light terminal palettes set the Neovim background to light.
 	["Light terminal palettes set the Neovim background to light"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
@@ -133,6 +145,7 @@ return {
 		assert(vim.api.nvim_get_hl(0, { name = "PmenuSel" }).fg == 0x222222)
 	end,
 
+	---Verify: Switching colorscheme cancels the palette query and ignores late responses.
 	["Switching colorscheme cancels the palette query and ignores late responses"] = function()
 		-- Given
 		vim.cmd.colorscheme("chameleon")
@@ -148,6 +161,7 @@ return {
 		assert(#vim.api.nvim_get_autocmds({ group = "chameleon-query" }) == 0)
 	end,
 
+	---Verify: Palette changes are only read when the colorscheme is loaded again.
 	["Palette changes are only read when the colorscheme is loaded again"] = function()
 		-- Given
 		vim.cmd.colorscheme("chameleon")
@@ -170,12 +184,15 @@ return {
 		assert(vim.api.nvim_get_hl(0, { name = "Normal" }).fg == 0xffffff)
 	end,
 
+	---Verify: Colorscheme loaded before the TUI attaches waits for UIEnter.
 	["Colorscheme loaded before the TUI attaches waits for UIEnter"] = function()
 		-- Given
+		---Simulate the attached terminal UI state.
 		vim.api.nvim_list_uis = function()
 			return {}
 		end
 		local queries = 0
+		---Record terminal queries sent by the plugin.
 		vim.api.nvim_ui_send = function()
 			queries = queries + 1
 		end
@@ -189,6 +206,7 @@ return {
 		-- When
 		vim.api.nvim_exec_autocmds("UIEnter", {})
 		assert(
+			---Check whether the asynchronous operation has completed.
 			vim.wait(500, function()
 				return queries == 1
 			end),

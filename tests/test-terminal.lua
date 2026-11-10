@@ -2,6 +2,8 @@ local send
 local list_uis
 local notify
 
+---Simulate terminal responses for a palette.
+---@param colors table
 local function respond(colors)
 	for index = 15, 0, -1 do
 		local color = colors[index]
@@ -20,19 +22,23 @@ local function respond(colors)
 end
 
 return {
+	---Save editor state and prepare terminal mocks.
 	before = function()
 		local terminal = require("chameleon.terminal")
 		terminal.cancel()
 		terminal.colors = nil
 		send = vim.api.nvim_ui_send
+		---Suppress terminal queries during the test.
 		vim.api.nvim_ui_send = function() end
 		list_uis = vim.api.nvim_list_uis
 		notify = vim.notify
+		---Simulate the attached terminal UI state.
 		vim.api.nvim_list_uis = function()
 			return { { stdout_tty = true } }
 		end
 	end,
 
+	---Cancel pending queries and restore editor state.
 	after = function()
 		require("chameleon.terminal").cancel()
 		vim.api.nvim_ui_send = send
@@ -40,6 +46,7 @@ return {
 		vim.notify = notify
 	end,
 
+	---Verify: Terminal RGB responses support one to four hex digits per channel.
 	["Terminal RGB responses support one to four hex digits per channel"] = function()
 		-- Given
 		local responses = {
@@ -60,6 +67,7 @@ return {
 		end
 	end,
 
+	---Verify: Unrelated and malformed terminal responses are ignored.
 	["Unrelated and malformed terminal responses are ignored"] = function()
 		-- Given
 		local responses = {
@@ -81,19 +89,24 @@ return {
 		end
 	end,
 
+	---Verify: All ANSI colors and the default colors are queried without overlapping requests.
 	["All ANSI colors and the default colors are queried without overlapping requests"] = function()
 		-- Given
 		local requests = {}
+		---Record terminal queries sent by the plugin.
 		vim.api.nvim_ui_send = function(query)
 			table.insert(requests, query)
 		end
 
 		-- When
+		---Start a query with a no-op completion callback.
 		require("chameleon.terminal").query(function() end)
+		---Start a query with a no-op completion callback.
 		require("chameleon.terminal").query(function() end)
 
 		-- Then
 		assert(
+			---Check whether the asynchronous operation has completed.
 			vim.wait(500, function()
 				return #requests == 1
 			end),
@@ -106,10 +119,12 @@ return {
 		assert(requests[1]:find("\027]10;?\027\\\027]11;?\027\\", 1, true))
 	end,
 
+	---Verify: A complete palette is applied once even when responses arrive out of order.
 	["A complete palette is applied once even when responses arrive out of order"] = function()
 		-- Given
 		local got
 		local count = 0
+		---Capture completion of the terminal palette query.
 		require("chameleon.terminal").query(function(colors)
 			got = colors
 			count = count + 1
@@ -124,11 +139,13 @@ return {
 		assert(count == 1)
 	end,
 
+	---Verify: The previous palette is kept until every ANSI color has arrived.
 	["The previous palette is kept until every ANSI color has arrived"] = function()
 		-- Given
 		local terminal = require("chameleon.terminal")
 		terminal.colors = vim.deepcopy(require("tests.current.colors"))
 		local previous = vim.deepcopy(terminal.colors)
+		---Capture completion of the terminal palette query.
 		terminal.query(function()
 			error("Incomplete palette was applied")
 		end)
@@ -140,11 +157,13 @@ return {
 		assert(vim.deep_equal(terminal.colors, previous))
 	end,
 
+	---Verify: Loading the colorscheme again can apply the same palette.
 	["Loading the colorscheme again can apply the same palette"] = function()
 		-- Given
 		local terminal = require("chameleon.terminal")
 		terminal.colors = vim.deepcopy(require("tests.current.colors"))
 		local applied = false
+		---Capture completion of the terminal palette query.
 		terminal.query(function()
 			applied = true
 		end)
@@ -157,12 +176,14 @@ return {
 		assert(applied)
 	end,
 
+	---Verify: Terminals without default color responses still supply a palette.
 	["Terminals without default color responses still supply a palette"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
 		colors.foreground = nil
 		colors.background = nil
 		local got
+		---Capture completion of the terminal palette query.
 		require("chameleon.terminal").query(function(result)
 			got = result
 		end)
@@ -170,6 +191,7 @@ return {
 		-- When
 		respond(colors)
 		assert(
+			---Check whether the asynchronous operation has completed.
 			vim.wait(1500, function()
 				return got ~= nil
 			end),
@@ -180,9 +202,11 @@ return {
 		assert(vim.deep_equal(got, colors))
 	end,
 
+	---Verify: Cancelled requests ignore late responses.
 	["Cancelled requests ignore late responses"] = function()
 		-- Given
 		local terminal = require("chameleon.terminal")
+		---Capture completion of the terminal palette query.
 		terminal.query(function()
 			error("Cancelled request was applied")
 		end)
@@ -195,15 +219,18 @@ return {
 		assert(terminal.colors == nil)
 	end,
 
+	---Verify: Incomplete queries keep the previous palette and clean up their listeners.
 	["Incomplete queries keep the previous palette and clean up their listeners"] = function()
 		-- Given
 		local terminal = require("chameleon.terminal")
 		local previous = vim.deepcopy(require("tests.current.colors"))
 		terminal.colors = previous
 		local warning
+		---Capture notifications for assertions.
 		vim.notify = function(message)
 			warning = message
 		end
+		---Capture completion of the terminal palette query.
 		terminal.query(function()
 			error("Incomplete palette was applied")
 		end)
@@ -211,6 +238,7 @@ return {
 		-- When
 		terminal.receive("\027]4;1;rgb:ff/ff/ff")
 		assert(
+			---Check whether the asynchronous operation has completed.
 			vim.wait(1500, function()
 				return warning ~= nil
 			end),

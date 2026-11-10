@@ -2,6 +2,7 @@ local M = {}
 
 M.name = "chameleon"
 
+---Apply terminal colors while Chameleon is the active colorscheme.
 ---@param colors table
 local function apply_colors(colors)
 	if vim.g.colors_name ~= M.name then
@@ -28,6 +29,7 @@ local function apply_colors(colors)
 	end
 end
 
+---Apply cached colors and refresh them asynchronously from the terminal.
 function M.apply()
 	if not vim.api.nvim_ui_send then
 		vim.notify("chameleon.nvim requires Neovim 0.12 or later.", vim.log.levels.ERROR)
@@ -42,6 +44,8 @@ function M.apply()
 	if colors then
 		apply_colors(colors)
 	end
+	---Apply refreshed colors and notify colorscheme listeners.
+	---@param result table
 	terminal.query(function(result)
 		if vim.g.colors_name ~= M.name then
 			return
