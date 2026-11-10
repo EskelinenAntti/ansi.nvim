@@ -52,27 +52,21 @@
     link = "Keyword"
   },
   ["@keyword.conditional"] = {
-    bold = true,
     fg = "#a68fc0"
   },
   ["@keyword.function"] = {
-    bold = true,
     fg = "#a68fc0"
   },
   ["@keyword.import"] = {
-    bold = true,
     fg = "#66c2b5"
   },
   ["@keyword.operator"] = {
-    bold = true,
     fg = "#66c2b5"
   },
   ["@keyword.repeat"] = {
-    bold = true,
     fg = "#a68fc0"
   },
   ["@keyword.return"] = {
-    bold = true,
     fg = "#a68fc0"
   },
   ["@markup.heading"] = {
@@ -164,7 +158,6 @@
     fg = "#7cbfa0"
   },
   Boolean = {
-    bold = true,
     fg = "#d2b071"
   },
   Changed = {
@@ -192,7 +185,7 @@
     italic = true
   },
   ColorColumn = {
-    bg = "#373939"
+    bg = "#1c1f21"
   },
   Comment = {
     fg = "#9ca3a4",
@@ -202,7 +195,6 @@
     fg = "#7e8384"
   },
   Conditional = {
-    bold = true,
     fg = "#a68fc0"
   },
   Constant = {
@@ -218,7 +210,7 @@
     fg = "#14181a"
   },
   CursorColumn = {
-    bg = "#373939"
+    bg = "#1c1f21"
   },
   CursorLine = {
     bg = "#1c1f21"
@@ -333,7 +325,6 @@
     fg = "#dd7a72"
   },
   Exception = {
-    bold = true,
     fg = "#dd7a72"
   },
   Float = {
@@ -349,8 +340,7 @@
     fg = "#729fc0"
   },
   FoldColumn = {
-    bg = "#14181a",
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Folded = {
     bg = "#101315",
@@ -393,14 +383,13 @@
     fg = "#66c2b5"
   },
   Keyword = {
-    bold = true,
     fg = "#a68fc0"
   },
   Label = {
     fg = "#66c2b5"
   },
   LineNr = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   LspCodeLens = {
     fg = "#9ca3a4",
@@ -433,9 +422,10 @@
     fg = "#66c2b5"
   },
   MatchParen = {
-    bg = "#7e8384",
+    bg = "#373939",
     bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc",
+    underline = true
   },
   ModeMsg = {
     bold = true,
@@ -450,7 +440,7 @@
     fg = "#d2dbdc"
   },
   NonText = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Normal = {
     bg = "#14181a",
@@ -499,7 +489,6 @@
     fg = "#dd7a72"
   },
   Repeat = {
-    bold = true,
     fg = "#a68fc0"
   },
   Search = {
@@ -508,7 +497,7 @@
     fg = "#14181a"
   },
   SignColumn = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Special = {
     fg = "#66c2b5"
@@ -517,7 +506,7 @@
     fg = "#d2b071"
   },
   SpecialKey = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   SpellBad = {
     sp = "#dd7a72",
@@ -536,7 +525,6 @@
     undercurl = true
   },
   Statement = {
-    bold = true,
     fg = "#a68fc0"
   },
   StatusLine = {
@@ -677,7 +665,7 @@
     italic = true
   },
   Whitespace = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   WildMenu = {
     bg = "#373939",

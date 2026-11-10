@@ -40,7 +40,7 @@ The plugin works in any terminal that answers OSC 4 palette queries. It does not
 
 ## Appearance
 
-Functions and types use regular weight. The active line uses a subtle raised surface color and an accented line number.
+Keywords, functions, and types use regular weight and distinct syntax colors. Muted line numbers and editor guides keep attention on the code. The active line uses a subtle raised surface color and an accented line number; matching parentheses use an underlined selection surface.
 
 Loading the colorscheme enables `cursorline`. To disable it, set the option after loading the colorscheme:
 
