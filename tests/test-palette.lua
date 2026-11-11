@@ -13,10 +13,10 @@ return {
 		assert(got.background == colors.background)
 		assert(got.foreground == colors.foreground)
 		assert(got.accent == colors[4])
-		assert(got.error_foreground == colors[1])
+		assert(got.negative_foreground == colors[1])
 		assert(got.string_foreground == colors[2])
-		assert(got.literal_foreground == colors[3])
-		assert(got.function_foreground == colors[4])
+		assert(got.data_foreground == colors[3])
+		assert(got.entity_foreground == colors[4])
 		assert(got.keyword_foreground == colors[5])
 		assert(got.special_foreground == colors[6])
 		assert(got.mode == "dark")
@@ -147,7 +147,7 @@ return {
 
 		assert(require("chameleon.color").contrast(got.raised_background, got.keyword_foreground) >= 4.5)
 		assert(got.keyword_foreground ~= colors[5])
-		assert(got.function_foreground == colors[4])
+		assert(got.entity_foreground == colors[4])
 		assert(vim.deep_equal(colors, source), "Terminal colors were modified")
 	end,
 

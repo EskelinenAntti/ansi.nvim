@@ -16,34 +16,24 @@ local color = require("chameleon.color")
 ---@field text_selection_background string Buffer-text selection surface, including the contrast fallback
 ---@field highlight_underline true|nil Fallback underline for item/reference highlights with an indistinct surface
 ---@field accent string Focus indicators, titles, and matched text, readable on highlight surfaces
----@field function_foreground string Function definitions and calls
----@field member_foreground string Object fields, members, and properties
----@field type_foreground string Types, constructors, and storage declarations
+---@field entity_foreground string Function, member, property, and markup-tag names
+---@field data_foreground string Types, constructors, storage declarations, attributes, non-string literals, and escape sequences
 ---@field keyword_foreground string Keywords and control-flow statements
----@field literal_foreground string Numbers, booleans, constants, and escape sequences
 ---@field string_foreground string Strings, characters, and literal markup text
 ---@field special_foreground string Operators, directives, built-in calls, and special syntax
----@field builtin_variable_foreground string Language-provided variables such as self and this
----@field exception_foreground string Exception-handling and debugging statements
----@field tag_foreground string Markup tag names
----@field error_foreground string Error diagnostics, messages, and spelling errors
----@field warning_foreground string Warning diagnostics, messages, and capitalization hints
----@field success_foreground string Successful diagnostics and health/status messages
+---@field runtime_foreground string Language-provided variables, exception handling, and debugging statements
+---@field negative_foreground string Error diagnostics, messages, spelling errors, and deleted-line markers or annotations
+---@field attention_foreground string Warnings, capitalization hints, and changed-line markers or annotations
+---@field positive_foreground string Successful status messages and added-line markers or annotations
 ---@field info_foreground string Informational diagnostics
----@field hint_foreground string Hint diagnostics, local spelling hints, and continuation guidance
----@field metadata_foreground string Category labels in completion and keybinding menus
+---@field hint_foreground string Hints, continuation guidance, and category labels in completion/keybinding menus
 ---@field prompt_foreground string Interactive question prompts
----@field link_foreground string Links and navigable directory names
+---@field navigation_foreground string Links, directory names, and second-level document headings
 ---@field rare_word_foreground string Uncommon-word spelling hints
----@field heading2_foreground string Second-level document headings
 ---@field heading3_foreground string Third-level document headings
 ---@field heading4_foreground string Fourth-level document headings
----@field search_background string Non-current search match fill
+---@field attention_background string Search matches and TODO/annotation emphasis fills
 ---@field replacement_background string Substitution match fill
----@field todo_background string TODO and annotation emphasis fill
----@field diff_add_foreground string Added-line markers and diff annotations
----@field diff_change_foreground string Changed-line markers and diff annotations
----@field diff_delete_foreground string Deleted-line markers and diff annotations
 ---@field diff_add_background string Added-line surface
 ---@field diff_change_background string Changed-line surface
 ---@field diff_delete_background string Deleted-line surface
@@ -147,34 +137,24 @@ function M.palette_for(colors)
 		text_selection_background = weak_selection and foreground or highlight_background,
 		highlight_underline = weak_selection or nil,
 		accent = readable_accent(4, text_background),
-		function_foreground = blue,
-		member_foreground = blue,
-		type_foreground = yellow,
+		entity_foreground = blue,
+		data_foreground = yellow,
 		keyword_foreground = magenta,
-		literal_foreground = yellow,
 		string_foreground = green,
 		special_foreground = cyan,
-		builtin_variable_foreground = red,
-		exception_foreground = red,
-		tag_foreground = blue,
-		error_foreground = red,
-		warning_foreground = yellow,
-		success_foreground = green,
+		runtime_foreground = red,
+		negative_foreground = red,
+		attention_foreground = yellow,
+		positive_foreground = green,
 		info_foreground = blue,
 		hint_foreground = cyan,
-		metadata_foreground = cyan,
 		prompt_foreground = green,
-		link_foreground = blue,
+		navigation_foreground = blue,
 		rare_word_foreground = magenta,
-		heading2_foreground = blue,
 		heading3_foreground = cyan,
 		heading4_foreground = green,
-		search_background = yellow,
+		attention_background = yellow,
 		replacement_background = magenta,
-		todo_background = yellow,
-		diff_add_foreground = green,
-		diff_change_foreground = yellow,
-		diff_delete_foreground = red,
 		diff_add_background = diff_background(green, 0.5),
 		diff_change_background = diff_background(yellow, 0.5),
 		diff_delete_background = diff_background(red, 0.5),
