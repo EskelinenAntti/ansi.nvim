@@ -121,9 +121,9 @@ return {
 				"diff_add_background",
 				"diff_change_background",
 				"diff_delete_background",
-				"diff_add_word_background",
-				"diff_change_word_background",
-				"diff_delete_word_background",
+				"diff_add_inline_background",
+				"diff_change_inline_background",
+				"diff_delete_inline_background",
 			}) do
 				assert(color.contrast(got[role], pair[2]) >= minimum - 0.000001, role .. " lost contrast")
 			end

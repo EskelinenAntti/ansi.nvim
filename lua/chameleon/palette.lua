@@ -9,12 +9,12 @@ local color = require("chameleon.color")
 ---@field raised_background string
 ---@field highlight_background string Shared surface for menus, references, and matching parentheses
 ---@field shadow_background string
----@field muted string Non-text decoration
+---@field muted string Low-emphasis UI text and decoration
 ---@field secondary_foreground string Readable secondary text
 ---@field emphasis_foreground string
----@field selection_foreground string Visual selection text
----@field selection_background string Visual selection surface, including the contrast fallback
----@field selection_underline true|nil Extra cue for soft selections when the surface is indistinct
+---@field text_selection_foreground string Visual selection text
+---@field text_selection_background string Visual selection surface, including the contrast fallback
+---@field highlight_underline true|nil Underline highlighted items and references when their surface is indistinct
 ---@field accent string
 ---@field red string
 ---@field green string
@@ -22,12 +22,12 @@ local color = require("chameleon.color")
 ---@field blue string
 ---@field magenta string
 ---@field cyan string
----@field diff_add_background string
----@field diff_change_background string
----@field diff_delete_background string
----@field diff_add_word_background string
----@field diff_change_word_background string
----@field diff_delete_word_background string
+---@field diff_add_background string Added lines
+---@field diff_change_background string Changed lines
+---@field diff_delete_background string Deleted lines
+---@field diff_add_inline_background string Added text within a line
+---@field diff_change_inline_background string Changed text within a line
+---@field diff_delete_inline_background string Deleted text within a line
 
 ---Map the terminal's ANSI colors and default colors into Palette.
 ---@param colors table Raw terminal colors, with ANSI indices starting at 0
@@ -119,9 +119,9 @@ function M.palette_for(colors)
 		muted = muted,
 		secondary_foreground = secondary_foreground,
 		emphasis_foreground = emphasis_foreground,
-		selection_foreground = weak_selection and background or foreground,
-		selection_background = weak_selection and foreground or highlight_background,
-		selection_underline = weak_selection or nil,
+		text_selection_foreground = weak_selection and background or foreground,
+		text_selection_background = weak_selection and foreground or highlight_background,
+		highlight_underline = weak_selection or nil,
 		accent = syntax(4, text_background),
 		red = red,
 		green = green,
@@ -132,9 +132,9 @@ function M.palette_for(colors)
 		diff_add_background = diff_background(green, 0.5),
 		diff_change_background = diff_background(yellow, 0.5),
 		diff_delete_background = diff_background(red, 0.5),
-		diff_add_word_background = diff_background(green, 1),
-		diff_change_word_background = diff_background(yellow, 1),
-		diff_delete_word_background = diff_background(red, 1),
+		diff_add_inline_background = diff_background(green, 1),
+		diff_change_inline_background = diff_background(yellow, 1),
+		diff_delete_inline_background = diff_background(red, 1),
 	}
 end
 

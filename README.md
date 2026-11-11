@@ -75,10 +75,10 @@ Dark-theme shadows repeat the recessed step; light-theme shadows use the termina
 
 Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Syntax accents target 4.5:1 on editor and float backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
 
-Diffs use subtle red, green, and yellow surfaces derived from the palette. Syntax colors remain visible on added and changed lines, with a stronger surface for changed words.
+Diffs use subtle red, green, and yellow surfaces derived from the palette. Syntax colors remain visible on added and changed lines, with a stronger surface for changed text within a line.
 
 ## Development
 
-Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`. `lua/chameleon/highlighter.lua` only maps semantic palette roles to Neovim highlight definitions.
+Palette property names are project-specific semantic roles, not a standardized palette schema. Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`. `lua/chameleon/highlighter.lua` only maps semantic palette roles to Neovim highlight definitions.
 
 Run the tests with `make test`. Update the highlight snapshot with `make snapshot`.
