@@ -57,7 +57,7 @@ The palette is read once when the colorscheme loads. After changing your termina
 
 The plugin queries the terminal's 16 palette colors using OSC 4, and its default foreground and background using OSC 10 and 11. Neovim's `nvim_ui_send()` sends the queries, and `TermResponse` receives the colors asynchronously. No Rex CLI, configuration files, or additional plugins are needed.
 
-If the terminal does not answer OSC 10 and 11, the plugin uses palette colors 7 and 0 for foreground and background. These can differ from the terminal's actual default colors. UI surfaces and selection colors are derived from the palette; terminal yellow is also used for orange highlights.
+If the terminal does not answer OSC 10 and 11, the plugin uses palette colors 7 and 0 for foreground and background. These can differ from the terminal's actual default colors. UI surfaces and selection colors are derived from the palette.
 
 The temporary response handlers are removed when the query finishes. There is no watcher or polling. If a complete terminal palette cannot be read, the previous highlights are kept and a warning is shown.
 
@@ -69,16 +69,29 @@ Surface shades use [Material 3's surface tone spacing](https://github.com/materi
 | --- | --- | --- |
 | Recessed | -2 | +2 |
 | Raised | +4 | -2 |
-| Selection | +16 | -8 |
+| Emphasis | +16 | -8 |
 
 Dark-theme shadows repeat the recessed step; light-theme shadows use the terminal foreground. This is a Material-inspired adaptation: the terminal background stays unchanged, and the generated shades are mixed in linear RGB. Surface tones are limited to retain 4.5:1 foreground contrast, or the terminal's original contrast if lower.
 
-Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and muted UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Syntax accents target 4.5:1 on editor and float backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
+Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and subtle UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Syntax accents target 4.5:1 on editor and float backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
 
 Diffs use subtle red, green, and yellow surfaces derived from the palette. Syntax colors remain visible on added and changed lines, with a stronger surface for changed text within a line.
 
 ## Development
 
-Palette property names are project-specific semantic roles, not a standardized palette schema. Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`. `lua/chameleon/highlighter.lua` only maps semantic palette roles to Neovim highlight definitions. Public colors describe syntax, diagnostics, and UI purposes; ANSI hue names stay private to palette derivation.
+The palette describes color characteristics, not syntax categories or diagnostic meanings. Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`; `lua/chameleon/highlighter.lua` assigns those colors to Neovim highlight groups without calculations.
+
+| Palette family | Characteristics |
+| --- | --- |
+| `background*` | Default, recessed, raised, emphasis, and deep tones |
+| `foreground*` | Default, muted (4.5:1 target), subtle (3:1 target), and emphasis foreground variants |
+| `background_contrast` + `foreground_on_contrast` | A color pair that inverts the defaults when the emphasis tone is indistinct |
+| `accent_1` … `accent_6` | Chromatic foreground variants from terminal slots 1–6; numbers identify families, not brightness ranks or code structures |
+| `accent_1_subtle` … `accent_3_subtle` | Background tints close to the default background |
+| `accent_1_muted` … `accent_3_muted` | Stronger background tints in the same families |
+| `accent_4_emphasis` | Family 4 checked against the least-contrasting surface |
+| `background_emphasis_is_subtle` | A color characteristic: the emphasis background differs from the default by less than two L* tones |
+
+Only variants needed by the current mappings are derived. Naming takes inspiration from [Radix's contrast scales](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale) and [Modus's foreground/background variants](https://protesilaos.com/emacs/modus-themes); this remains a project-specific palette, not an implementation of either schema.
 
 Run the tests with `make test`. Update the highlight snapshot with `make snapshot`.
