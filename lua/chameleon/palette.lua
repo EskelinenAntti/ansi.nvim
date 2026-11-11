@@ -1,6 +1,34 @@
 local M = {}
 local color = require("chameleon.color")
 
+---@class Palette
+---@field mode "dark"|"light"
+---@field background string
+---@field foreground string
+---@field recessed_background string
+---@field raised_background string
+---@field highlight_background string Shared surface for menus, references, and matching parentheses
+---@field shadow_background string
+---@field muted string Non-text decoration
+---@field secondary_foreground string Readable secondary text
+---@field emphasis_foreground string
+---@field selection_foreground string Visual selection text
+---@field selection_background string Visual selection surface, including the contrast fallback
+---@field selection_underline true|nil Extra cue for soft selections when the surface is indistinct
+---@field accent string
+---@field red string
+---@field green string
+---@field yellow string
+---@field blue string
+---@field magenta string
+---@field cyan string
+---@field diff_add_background string
+---@field diff_change_background string
+---@field diff_delete_background string
+---@field diff_add_word_background string
+---@field diff_change_word_background string
+---@field diff_delete_word_background string
+
 ---Map the terminal's ANSI colors and default colors into Palette.
 ---@param colors table Raw terminal colors, with ANSI indices starting at 0
 ---@return Palette
@@ -29,29 +57,27 @@ function M.palette_for(colors)
 		return color.with_tone(background, target, mode == "dark" and "down" or "up")
 	end
 
-	local dark_background = surface(tones.lowest)
-	-- Repeat the lowest-surface step for the deeper surface role.
-	local darker_background = surface(tones.lowest + tones.lowest - tones.surface)
-	local lighter_background = surface(tones.low)
-	local selection = surface(tones.highest)
+	local recessed_background = surface(tones.lowest)
+	local raised_background = surface(tones.low)
+	local highlight_background = surface(tones.highest)
 
 	-- Use the least contrasting surface so derived text also works in menus and selections.
 	local text_background = background
-	for _, candidate in ipairs({ dark_background, lighter_background, selection }) do
+	for _, candidate in ipairs({ recessed_background, raised_background, highlight_background }) do
 		if color.contrast(candidate, foreground) < color.contrast(text_background, foreground) then
 			text_background = candidate
 		end
 	end
 	-- WCAG targets: 3:1 for muted UI and 4.5:1 for regular text.
 	local muted = color.for_contrast(text_background, foreground, 3)
-	local light_foreground = color.for_contrast(text_background, foreground, 4.5)
+	local secondary_foreground = color.for_contrast(text_background, foreground, 4.5)
 
 	---Keep terminal hues, correcting only accents that would be hard to read.
 	---@param index integer
 	---@param surface_color string|nil
 	---@return string
 	local function syntax(index, surface_color)
-		surface_color = surface_color or lighter_background
+		surface_color = surface_color or raised_background
 		local minimum_contrast = math.min(4.5, color.contrast(surface_color, foreground))
 		local value = colors[index]
 		if color.contrast(surface_color, value) >= minimum_contrast then
@@ -61,37 +87,54 @@ function M.palette_for(colors)
 		return color.with_tone(value, color.tone(target), mode == "dark" and "up" or "down")
 	end
 
-	local bright_foreground = mode == "light" and foreground or colors[15]
-	if color.contrast(text_background, bright_foreground) < color.contrast(text_background, foreground) then
-		bright_foreground = foreground
+	local emphasis_foreground = mode == "light" and foreground or colors[15]
+	if color.contrast(text_background, emphasis_foreground) < color.contrast(text_background, foreground) then
+		emphasis_foreground = foreground
+	end
+
+	-- Contrast-limited palettes need explicit selection cues instead of an indistinct surface.
+	local highlight_tone = color.tone(highlight_background)
+	local weak_selection = math.abs(highlight_tone - tone) < 2
+	local red, green, yellow = syntax(1), syntax(2), syntax(3)
+	local highlight_contrast = color.contrast(background, highlight_background)
+
+	---Tint diff surfaces within the palette's selection contrast budget.
+	---@param accent string
+	---@param strength number
+	---@return string
+	local function diff_background(accent, strength)
+		local tint = color.for_contrast(background, accent, 1 + (highlight_contrast - 1) * strength)
+		local target = tone + (highlight_tone - tone) * strength
+		return color.with_tone(tint, target, mode == "dark" and "down" or "up")
 	end
 
 	return {
 		mode = mode,
-		accent = syntax(4, text_background),
-		selection = selection,
-		muted = muted,
 		background = background,
-		dark_background = dark_background,
-		darker_background = darker_background,
-		lighter_background = lighter_background,
 		foreground = foreground,
-		dark_foreground = muted,
-		light_foreground = light_foreground,
-		bright_foreground = bright_foreground,
-		red = syntax(1),
-		green = syntax(2),
-		yellow = syntax(3),
-		orange = syntax(3),
+		recessed_background = recessed_background,
+		raised_background = raised_background,
+		highlight_background = highlight_background,
+		shadow_background = mode == "light" and foreground or surface(tones.lowest + tones.lowest - tones.surface),
+		muted = muted,
+		secondary_foreground = secondary_foreground,
+		emphasis_foreground = emphasis_foreground,
+		selection_foreground = weak_selection and background or foreground,
+		selection_background = weak_selection and foreground or highlight_background,
+		selection_underline = weak_selection or nil,
+		accent = syntax(4, text_background),
+		red = red,
+		green = green,
+		yellow = yellow,
 		blue = syntax(4),
 		magenta = syntax(5),
 		cyan = syntax(6),
-		bright_red = colors[9],
-		bright_green = colors[10],
-		bright_yellow = colors[11],
-		bright_blue = colors[12],
-		bright_magenta = colors[13],
-		bright_cyan = colors[14],
+		diff_add_background = diff_background(green, 0.5),
+		diff_change_background = diff_background(yellow, 0.5),
+		diff_delete_background = diff_background(red, 0.5),
+		diff_add_word_background = diff_background(green, 1),
+		diff_change_word_background = diff_background(yellow, 1),
+		diff_delete_word_background = diff_background(red, 1),
 	}
 end
 

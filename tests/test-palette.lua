@@ -15,8 +15,7 @@ return {
 		assert(got.accent == colors[4])
 		assert(got.red == colors[1])
 		assert(got.green == colors[2])
-		assert(got.orange == colors[3])
-		assert(got.bright_cyan == colors[14])
+		assert(got.yellow == colors[3])
 		assert(got.mode == "dark")
 		assert(vim.deep_equal(colors, source), "Source colors were modified")
 	end,
@@ -48,11 +47,11 @@ return {
 
 		-- Then
 		assert(got.mode == "light")
-		assert(got.bright_foreground == "#000000")
+		assert(got.emphasis_foreground == "#000000")
 		local color = require("chameleon.color")
-		assert(math.abs(color.tone(got.selection) - 92) < 0.5)
-		assert(math.abs(color.tone(got.lighter_background) - 98) < 0.5)
-		assert(color.contrast(got.selection, got.light_foreground) >= 4.5)
+		assert(math.abs(color.tone(got.highlight_background) - 92) < 0.5)
+		assert(math.abs(color.tone(got.raised_background) - 98) < 0.5)
+		assert(color.contrast(got.highlight_background, got.secondary_foreground) >= 4.5)
 	end,
 
 	---Verify: Dark surfaces follow Material tonal spacing relative to the terminal background.
@@ -66,10 +65,10 @@ return {
 		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
-		assert(math.abs(color.tone(got.lighter_background) - baseline - 4) < 0.5)
-		assert(math.abs(color.tone(got.selection) - baseline - 16) < 0.5)
-		assert(math.abs(color.tone(got.dark_background) - baseline + 2) < 0.5)
-		assert(math.abs(color.tone(got.darker_background) - baseline + 4) < 0.5)
+		assert(math.abs(color.tone(got.raised_background) - baseline - 4) < 0.5)
+		assert(math.abs(color.tone(got.highlight_background) - baseline - 16) < 0.5)
+		assert(math.abs(color.tone(got.recessed_background) - baseline + 2) < 0.5)
+		assert(math.abs(color.tone(got.shadow_background) - baseline + 4) < 0.5)
 	end,
 
 	---Verify: Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes.
@@ -102,26 +101,31 @@ return {
 			local minimum = math.min(4.5, color.contrast(pair[1], pair[2]))
 			for _, surface in ipairs({
 				got.background,
-				got.dark_background,
-				got.darker_background,
-				got.lighter_background,
-				got.selection,
+				got.recessed_background,
+				got.raised_background,
+				got.highlight_background,
 			}) do
 				local available = color.contrast(surface, pair[2])
 				assert(available >= minimum - 0.000001, "Surface reduced text contrast: " .. surface)
-				assert(color.contrast(surface, got.light_foreground) >= math.min(4.5, available) - 0.000001)
+				assert(color.contrast(surface, got.secondary_foreground) >= math.min(4.5, available) - 0.000001)
 				assert(color.contrast(surface, got.muted) >= math.min(3, available) - 0.000001)
 			end
 			for _, role in ipairs({ "red", "green", "yellow", "blue", "magenta", "cyan", "accent" }) do
-				local available = color.contrast(got.lighter_background, pair[2])
+				local available = color.contrast(got.raised_background, pair[2])
 				assert(
-					color.contrast(got.lighter_background, got[role]) >= math.min(4.5, available),
+					color.contrast(got.raised_background, got[role]) >= math.min(4.5, available),
 					role .. " lost contrast"
 				)
 			end
-			local highlights = require("chameleon.highlighter").highlights_for(got)
-			for _, group in ipairs({ "DiffAdd", "DiffChange", "DiffDelete", "DiffText" }) do
-				assert(color.contrast(highlights[group].bg, pair[2]) >= minimum - 0.000001, group .. " lost contrast")
+			for _, role in ipairs({
+				"diff_add_background",
+				"diff_change_background",
+				"diff_delete_background",
+				"diff_add_word_background",
+				"diff_change_word_background",
+				"diff_delete_word_background",
+			}) do
+				assert(color.contrast(got[role], pair[2]) >= minimum - 0.000001, role .. " lost contrast")
 			end
 		end
 	end,
@@ -135,7 +139,7 @@ return {
 
 		local got = require("chameleon.palette").palette_for(colors)
 
-		assert(require("chameleon.color").contrast(got.lighter_background, got.magenta) >= 4.5)
+		assert(require("chameleon.color").contrast(got.raised_background, got.magenta) >= 4.5)
 		assert(got.magenta ~= colors[5])
 		assert(got.blue == colors[4])
 		assert(vim.deep_equal(colors, source), "Terminal colors were modified")
@@ -148,7 +152,7 @@ return {
 
 		local got = require("chameleon.palette").palette_for(colors)
 
-		assert(got.bright_foreground == colors.foreground)
+		assert(got.emphasis_foreground == colors.foreground)
 	end,
 
 	---Verify: Theme mode uses linear-light luminance instead of encoded RGB brightness.
