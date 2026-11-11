@@ -79,6 +79,6 @@ Diffs use subtle red, green, and yellow surfaces derived from the palette. Synta
 
 ## Development
 
-Palette property names are project-specific semantic roles, not a standardized palette schema. Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`. `lua/chameleon/highlighter.lua` only maps semantic palette roles to Neovim highlight definitions.
+Palette property names are project-specific semantic roles, not a standardized palette schema. Color derivation and contrast decisions belong in `lua/chameleon/palette.lua`. `lua/chameleon/highlighter.lua` only maps semantic palette roles to Neovim highlight definitions. Public colors describe syntax, diagnostics, and UI purposes; ANSI hue names stay private to palette derivation.
 
 Run the tests with `make test`. Update the highlight snapshot with `make snapshot`.

@@ -13,9 +13,12 @@ return {
 		assert(got.background == colors.background)
 		assert(got.foreground == colors.foreground)
 		assert(got.accent == colors[4])
-		assert(got.red == colors[1])
-		assert(got.green == colors[2])
-		assert(got.yellow == colors[3])
+		assert(got.error_foreground == colors[1])
+		assert(got.string_foreground == colors[2])
+		assert(got.literal_foreground == colors[3])
+		assert(got.function_foreground == colors[4])
+		assert(got.keyword_foreground == colors[5])
+		assert(got.special_foreground == colors[6])
 		assert(got.mode == "dark")
 		assert(vim.deep_equal(colors, source), "Source colors were modified")
 	end,
@@ -75,7 +78,7 @@ return {
 	["Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes"] = function()
 		-- Given
 		local color = require("chameleon.color")
-		local pairs = {
+		local color_pairs = {
 			{ "#000000", "#ffffff" },
 			{ "#ffffff", "#000000" },
 			{ "#555555", "#ffffff" },
@@ -89,7 +92,7 @@ return {
 			{ "#666666", "#ebdbb2" },
 		}
 
-		for _, pair in ipairs(pairs) do
+		for _, pair in ipairs(color_pairs) do
 			local colors = vim.deepcopy(require("tests.current.colors"))
 			colors.background, colors.foreground = pair[1], pair[2]
 
@@ -110,12 +113,15 @@ return {
 				assert(color.contrast(surface, got.secondary_foreground) >= math.min(4.5, available) - 0.000001)
 				assert(color.contrast(surface, got.muted) >= math.min(3, available) - 0.000001)
 			end
-			for _, role in ipairs({ "red", "green", "yellow", "blue", "magenta", "cyan", "accent" }) do
-				local available = color.contrast(got.raised_background, pair[2])
-				assert(
-					color.contrast(got.raised_background, got[role]) >= math.min(4.5, available),
-					role .. " lost contrast"
-				)
+			-- Selection text has its own paired surface; all other foreground roles use editor surfaces.
+			for role, value in pairs(got) do
+				if role == "accent" or (role:match("_foreground$") and role ~= "text_selection_foreground") then
+					local available = color.contrast(got.raised_background, pair[2])
+					assert(
+						color.contrast(got.raised_background, value) >= math.min(4.5, available),
+						role .. " lost contrast"
+					)
+				end
 			end
 			for _, role in ipairs({
 				"diff_add_background",
@@ -139,9 +145,9 @@ return {
 
 		local got = require("chameleon.palette").palette_for(colors)
 
-		assert(require("chameleon.color").contrast(got.raised_background, got.magenta) >= 4.5)
-		assert(got.magenta ~= colors[5])
-		assert(got.blue == colors[4])
+		assert(require("chameleon.color").contrast(got.raised_background, got.keyword_foreground) >= 4.5)
+		assert(got.keyword_foreground ~= colors[5])
+		assert(got.function_foreground == colors[4])
 		assert(vim.deep_equal(colors, source), "Terminal colors were modified")
 	end,
 

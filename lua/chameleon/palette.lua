@@ -2,29 +2,51 @@ local M = {}
 local color = require("chameleon.color")
 
 ---@class Palette
----@field mode "dark"|"light"
----@field background string
----@field foreground string
----@field recessed_background string
----@field raised_background string
----@field highlight_background string Shared surface for menus, references, and matching parentheses
----@field shadow_background string
----@field muted string Low-emphasis UI text and decoration
----@field secondary_foreground string Readable secondary text
----@field emphasis_foreground string
----@field text_selection_foreground string Visual selection text
----@field text_selection_background string Visual selection surface, including the contrast fallback
----@field highlight_underline true|nil Underline highlighted items and references when their surface is indistinct
----@field accent string
----@field red string
----@field green string
----@field yellow string
----@field blue string
----@field magenta string
----@field cyan string
----@field diff_add_background string Added lines
----@field diff_change_background string Changed lines
----@field diff_delete_background string Deleted lines
+---@field mode "dark"|"light" Terminal-derived appearance for Neovim's background option
+---@field background string Default editor background from the terminal
+---@field foreground string Default editor text from the terminal
+---@field recessed_background string Inactive windows, folds, and inset surfaces
+---@field raised_background string Floating panels, completion menus, and active-line guides
+---@field highlight_background string Contextual surface for highlighted items, references, and prompt panels
+---@field shadow_background string Floating-panel shadow tint adapted to the appearance mode
+---@field muted string Low-emphasis UI text, punctuation, and decoration
+---@field secondary_foreground string Readable comments, inlay hints, and secondary UI text
+---@field emphasis_foreground string Emphasized text and cursor fill, never weaker than the default foreground
+---@field text_selection_foreground string Selected buffer text
+---@field text_selection_background string Buffer-text selection surface, including the contrast fallback
+---@field highlight_underline true|nil Fallback underline for item/reference highlights with an indistinct surface
+---@field accent string Focus indicators, titles, and matched text, readable on highlight surfaces
+---@field function_foreground string Function definitions and calls
+---@field member_foreground string Object fields, members, and properties
+---@field type_foreground string Types, constructors, and storage declarations
+---@field keyword_foreground string Keywords and control-flow statements
+---@field literal_foreground string Numbers, booleans, constants, and escape sequences
+---@field string_foreground string Strings, characters, and literal markup text
+---@field special_foreground string Operators, directives, built-in calls, and special syntax
+---@field builtin_variable_foreground string Language-provided variables such as self and this
+---@field exception_foreground string Exception-handling and debugging statements
+---@field tag_foreground string Markup tag names
+---@field error_foreground string Error diagnostics, messages, and spelling errors
+---@field warning_foreground string Warning diagnostics, messages, and capitalization hints
+---@field success_foreground string Successful diagnostics and health/status messages
+---@field info_foreground string Informational diagnostics
+---@field hint_foreground string Hint diagnostics, local spelling hints, and continuation guidance
+---@field metadata_foreground string Category labels in completion and keybinding menus
+---@field prompt_foreground string Interactive question prompts
+---@field link_foreground string Links and navigable directory names
+---@field rare_word_foreground string Uncommon-word spelling hints
+---@field heading2_foreground string Second-level document headings
+---@field heading3_foreground string Third-level document headings
+---@field heading4_foreground string Fourth-level document headings
+---@field search_background string Non-current search match fill
+---@field replacement_background string Substitution match fill
+---@field todo_background string TODO and annotation emphasis fill
+---@field diff_add_foreground string Added-line markers and diff annotations
+---@field diff_change_foreground string Changed-line markers and diff annotations
+---@field diff_delete_foreground string Deleted-line markers and diff annotations
+---@field diff_add_background string Added-line surface
+---@field diff_change_background string Changed-line surface
+---@field diff_delete_background string Deleted-line surface
 ---@field diff_add_inline_background string Added text within a line
 ---@field diff_change_inline_background string Changed text within a line
 ---@field diff_delete_inline_background string Deleted text within a line
@@ -76,7 +98,7 @@ function M.palette_for(colors)
 	---@param index integer
 	---@param surface_color string|nil
 	---@return string
-	local function syntax(index, surface_color)
+	local function readable_accent(index, surface_color)
 		surface_color = surface_color or raised_background
 		local minimum_contrast = math.min(4.5, color.contrast(surface_color, foreground))
 		local value = colors[index]
@@ -95,7 +117,9 @@ function M.palette_for(colors)
 	-- Contrast-limited palettes need explicit selection cues instead of an indistinct surface.
 	local highlight_tone = color.tone(highlight_background)
 	local weak_selection = math.abs(highlight_tone - tone) < 2
-	local red, green, yellow = syntax(1), syntax(2), syntax(3)
+	-- Hue-based accents stay private; public roles describe their intended consumers.
+	local red, green, yellow = readable_accent(1), readable_accent(2), readable_accent(3)
+	local blue, magenta, cyan = readable_accent(4), readable_accent(5), readable_accent(6)
 	local highlight_contrast = color.contrast(background, highlight_background)
 
 	---Tint diff surfaces within the palette's selection contrast budget.
@@ -122,13 +146,35 @@ function M.palette_for(colors)
 		text_selection_foreground = weak_selection and background or foreground,
 		text_selection_background = weak_selection and foreground or highlight_background,
 		highlight_underline = weak_selection or nil,
-		accent = syntax(4, text_background),
-		red = red,
-		green = green,
-		yellow = yellow,
-		blue = syntax(4),
-		magenta = syntax(5),
-		cyan = syntax(6),
+		accent = readable_accent(4, text_background),
+		function_foreground = blue,
+		member_foreground = blue,
+		type_foreground = yellow,
+		keyword_foreground = magenta,
+		literal_foreground = yellow,
+		string_foreground = green,
+		special_foreground = cyan,
+		builtin_variable_foreground = red,
+		exception_foreground = red,
+		tag_foreground = blue,
+		error_foreground = red,
+		warning_foreground = yellow,
+		success_foreground = green,
+		info_foreground = blue,
+		hint_foreground = cyan,
+		metadata_foreground = cyan,
+		prompt_foreground = green,
+		link_foreground = blue,
+		rare_word_foreground = magenta,
+		heading2_foreground = blue,
+		heading3_foreground = cyan,
+		heading4_foreground = green,
+		search_background = yellow,
+		replacement_background = magenta,
+		todo_background = yellow,
+		diff_add_foreground = green,
+		diff_change_foreground = yellow,
+		diff_delete_foreground = red,
 		diff_add_background = diff_background(green, 0.5),
 		diff_change_background = diff_background(yellow, 0.5),
 		diff_delete_background = diff_background(red, 0.5),
