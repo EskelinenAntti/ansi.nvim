@@ -12,7 +12,7 @@ local color = require("chameleon.color")
 ---@field foreground string Unmodified default foreground
 ---@field foreground_muted string Default foreground blended toward a 4.5:1 contrast target
 ---@field foreground_subtle string Fainter foreground blended toward a 3:1 contrast target
----@field foreground_emphasis string Foreground variant checked against the least-contrasting surface
+---@field foreground_emphasis string Foreground variant retaining the default foreground's contrast on every editor surface
 ---@field foreground_on_contrast string Foreground paired with background_contrast
 ---@field background_contrast string Contrasting surface, inverting the default colors when the emphasis tone is too flat
 ---@field background_emphasis_is_subtle true|nil True when background_emphasis differs from background by less than two L* tones
@@ -22,7 +22,6 @@ local color = require("chameleon.color")
 ---@field accent_4 string High-contrast chromatic variant from terminal slot 4
 ---@field accent_5 string High-contrast chromatic variant from terminal slot 5
 ---@field accent_6 string High-contrast chromatic variant from terminal slot 6
----@field accent_4_emphasis string Family 4 checked against the least-contrasting surface
 ---@field accent_1_subtle string Low-contrast background tint in family 1
 ---@field accent_2_subtle string Low-contrast background tint in family 2
 ---@field accent_3_subtle string Low-contrast background tint in family 3
@@ -62,9 +61,10 @@ function M.palette_for(colors)
 	local background_raised = surface(tones.low)
 	local background_emphasis = surface(tones.highest)
 
-	-- Use the least-contrasting surface when deriving foreground variants.
+	-- All foreground variants share the same set of background surfaces.
+	local surfaces = { background, background_recessed, background_raised, background_emphasis }
 	local text_background = background
-	for _, candidate in ipairs({ background_recessed, background_raised, background_emphasis }) do
+	for _, candidate in ipairs(surfaces) do
 		if color.contrast(candidate, foreground) < color.contrast(text_background, foreground) then
 			text_background = candidate
 		end
@@ -75,22 +75,23 @@ function M.palette_for(colors)
 
 	---Keep terminal hues, correcting only accents that would be hard to read.
 	---@param index integer
-	---@param surface_color string|nil
 	---@return string
-	local function readable_accent(index, surface_color)
-		surface_color = surface_color or background_raised
-		local minimum_contrast = math.min(4.5, color.contrast(surface_color, foreground))
+	local function readable_accent(index)
 		local value = colors[index]
-		if color.contrast(surface_color, value) >= minimum_contrast then
-			return value
+		for _, surface_color in ipairs(surfaces) do
+			if color.contrast(surface_color, value) < minimum then
+				return color.with_tone(value, color.tone(foreground_muted), mode == "dark" and "up" or "down")
+			end
 		end
-		local target = color.for_contrast(surface_color, foreground, minimum_contrast)
-		return color.with_tone(value, color.tone(target), mode == "dark" and "up" or "down")
+		return value
 	end
 
 	local foreground_emphasis = mode == "light" and foreground or colors[15]
-	if color.contrast(text_background, foreground_emphasis) < color.contrast(text_background, foreground) then
-		foreground_emphasis = foreground
+	for _, surface_color in ipairs(surfaces) do
+		if color.contrast(surface_color, foreground_emphasis) < color.contrast(surface_color, foreground) then
+			foreground_emphasis = foreground
+			break
+		end
 	end
 
 	-- A nearly flat emphasis tone needs a more distinct contrast pair.
@@ -131,7 +132,6 @@ function M.palette_for(colors)
 		accent_4 = blue,
 		accent_5 = magenta,
 		accent_6 = cyan,
-		accent_4_emphasis = readable_accent(4, text_background),
 		accent_1_subtle = muted_accent(red, 0.5),
 		accent_2_subtle = muted_accent(green, 0.5),
 		accent_3_subtle = muted_accent(yellow, 0.5),

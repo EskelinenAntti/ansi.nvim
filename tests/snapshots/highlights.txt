@@ -21,13 +21,13 @@
     fg = "#d2b071"
   },
   ["@diff.minus"] = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   ["@diff.plus"] = {
     fg = "#7cbfa0"
   },
   ["@field"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@float"] = {
     link = "Float"
@@ -39,22 +39,22 @@
     fg = "#66c2b5"
   },
   ["@function.call"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@function.method"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@function.method.call"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@keyword"] = {
     link = "Keyword"
   },
   ["@keyword.conditional"] = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.function"] = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.import"] = {
     fg = "#66c2b5"
@@ -63,10 +63,10 @@
     fg = "#66c2b5"
   },
   ["@keyword.repeat"] = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.return"] = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@markup.heading"] = {
     bold = true,
@@ -103,7 +103,7 @@
     italic = true
   },
   ["@markup.link"] = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
   },
   ["@markup.raw"] = {
@@ -120,7 +120,7 @@
     link = "Operator"
   },
   ["@property"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@punctuation.bracket"] = {
     fg = "#d2dbdc"
@@ -146,7 +146,7 @@
     fg = "#66c2b5"
   },
   ["@tag"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@tag.attribute"] = {
     fg = "#d2b071"
@@ -167,10 +167,10 @@
     fg = "#d2dbdc"
   },
   ["@variable.builtin"] = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   ["@variable.member"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@variable.parameter"] = {
     fg = "#d2dbdc",
@@ -221,7 +221,7 @@
     fg = "#7e8384"
   },
   Conditional = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Constant = {
     fg = "#d2b071"
@@ -247,7 +247,7 @@
     fg = "#80a7c5"
   },
   Debug = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Define = {
     fg = "#66c2b5"
@@ -259,31 +259,31 @@
     strikethrough = true
   },
   DiagnosticError = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   DiagnosticHint = {
     fg = "#66c2b5"
   },
   DiagnosticInfo = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   DiagnosticOk = {
     fg = "#7cbfa0"
   },
   DiagnosticSignError = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   DiagnosticSignHint = {
     fg = "#66c2b5"
   },
   DiagnosticSignInfo = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   DiagnosticSignWarn = {
     fg = "#d2b071"
   },
   DiagnosticUnderlineError = {
-    sp = "#dd7a72",
+    sp = "#e08b85",
     undercurl = true
   },
   DiagnosticUnderlineHint = {
@@ -291,7 +291,7 @@
     undercurl = true
   },
   DiagnosticUnderlineInfo = {
-    sp = "#729fc0",
+    sp = "#80a7c5",
     undercurl = true
   },
   DiagnosticUnderlineOk = {
@@ -303,7 +303,7 @@
     undercurl = true
   },
   DiagnosticVirtualTextError = {
-    fg = "#dd7a72",
+    fg = "#e08b85",
     italic = true
   },
   DiagnosticVirtualTextHint = {
@@ -311,7 +311,7 @@
     italic = true
   },
   DiagnosticVirtualTextInfo = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     italic = true
   },
   DiagnosticVirtualTextOk = {
@@ -332,8 +332,8 @@
     bg = "#2b261e"
   },
   DiffDelete = {
-    bg = "#362222",
-    fg = "#dd7a72"
+    bg = "#332323",
+    fg = "#e08b85"
   },
   DiffText = {
     bg = "#403727",
@@ -342,21 +342,21 @@
   },
   Directory = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   EndOfBuffer = {
     fg = "#101315"
   },
   Error = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   ErrorMsg = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Exception = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Float = {
     fg = "#d2b071"
@@ -383,7 +383,7 @@
     italic = true
   },
   Function = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   GitSignsAdd = {
     fg = "#7cbfa0"
@@ -400,16 +400,16 @@
     link = "DiffText"
   },
   GitSignsDelete = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   GitSignsDeleteInline = {
-    bg = "#512f2d",
+    bg = "#4c3130",
     fg = "#d2dbdc",
     strikethrough = true
   },
   HealthError = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   HealthSuccess = {
     bold = true,
@@ -429,7 +429,7 @@
     fg = "#66c2b5"
   },
   Keyword = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Label = {
     fg = "#66c2b5"
@@ -560,10 +560,10 @@
     fg = "#d2dbdc"
   },
   Removed = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Repeat = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Search = {
     bg = "#d2b071",
@@ -583,7 +583,7 @@
     fg = "#7e8384"
   },
   SpellBad = {
-    sp = "#dd7a72",
+    sp = "#e08b85",
     undercurl = true
   },
   SpellCap = {
@@ -595,11 +595,11 @@
     undercurl = true
   },
   SpellRare = {
-    sp = "#a68fc0",
+    sp = "#ae9ac5",
     undercurl = true
   },
   Statement = {
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   StatusLine = {
     bg = "#1c1f21",
@@ -619,7 +619,7 @@
     fg = "#d2b071"
   },
   Substitute = {
-    bg = "#a68fc0",
+    bg = "#ae9ac5",
     bold = true,
     fg = "#14181a"
   },
@@ -636,7 +636,7 @@
     fg = "#e5eded"
   },
   Tag = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopeBorder = {
     bg = "#1c1f21",
@@ -674,7 +674,7 @@
     fg = "#d2b071"
   },
   TelescopeResultsDiffDelete = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   TelescopeSelection = {
     bg = "#373939",
@@ -701,7 +701,7 @@
     fg = "#d2b071"
   },
   Underlined = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
   },
   VertSplit = {
@@ -775,7 +775,7 @@
   },
   markdownH2 = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   markdownH3 = {
     bold = true,
@@ -790,7 +790,7 @@
     italic = true
   },
   markdownLinkText = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
   },
   typescriptAliasDeclaration = {

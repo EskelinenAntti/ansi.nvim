@@ -73,7 +73,7 @@ Surface shades use [Material 3's surface tone spacing](https://github.com/materi
 
 Dark-theme shadows repeat the recessed step; light-theme shadows use the terminal foreground. This is a Material-inspired adaptation: the terminal background stays unchanged, and the generated shades are mixed in linear RGB. Surface tones are limited to retain 4.5:1 foreground contrast, or the terminal's original contrast if lower.
 
-Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and subtle UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). Syntax accents target 4.5:1 on editor and float backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
+Comments target [4.5:1 contrast](https://www.w3.org/WAI/WCAG21/Techniques/general/G18) across editor surfaces, and subtle UI colors target [3:1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html). All six accents share a 4.5:1 contrast target across the default, recessed, raised, and emphasis backgrounds. Readable ANSI colors stay unchanged; weaker accents adjust tone while keeping their original hues. Visual selections use the regular foreground, or inverted terminal colors when the selection surface would otherwise be indistinct. Targets are limited by the terminal foreground's contrast, and the original terminal palette stays unchanged. These targets do not imply WCAG compliance for every highlight group.
 
 Diffs use subtle red, green, and yellow surfaces derived from the palette. Syntax colors remain visible on added and changed lines, with a stronger surface for changed text within a line.
 
@@ -86,10 +86,9 @@ The palette describes color characteristics, not syntax categories or diagnostic
 | `background*` | Default, recessed, raised, emphasis, and deep tones |
 | `foreground*` | Default, muted (4.5:1 target), subtle (3:1 target), and emphasis foreground variants |
 | `background_contrast` + `foreground_on_contrast` | A color pair that inverts the defaults when the emphasis tone is indistinct |
-| `accent_1` … `accent_6` | Chromatic foreground variants from terminal slots 1–6; numbers identify families, not brightness ranks or code structures |
+| `accent_1` … `accent_6` | Chromatic foreground variants from terminal slots 1–6, with the same contrast target across editor surfaces; numbers identify families, not brightness ranks |
 | `accent_1_subtle` … `accent_3_subtle` | Background tints close to the default background |
 | `accent_1_muted` … `accent_3_muted` | Stronger background tints in the same families |
-| `accent_4_emphasis` | Family 4 checked against the least-contrasting surface |
 | `background_emphasis_is_subtle` | A color characteristic: the emphasis background differs from the default by less than two L* tones |
 
 Only variants needed by the current mappings are derived. Naming takes inspiration from [Radix's contrast scales](https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale) and [Modus's foreground/background variants](https://protesilaos.com/emacs/modus-themes); this remains a project-specific palette, not an implementation of either schema.
