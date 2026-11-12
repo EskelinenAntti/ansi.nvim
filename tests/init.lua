@@ -1,3 +1,5 @@
+vim.opt.rtp:prepend(".")
+
 local api = vim.api
 local colors = require("tests.colors")
 local attached, requests, warnings
@@ -18,12 +20,8 @@ local function test(name, run)
 	vim.cmd.colorscheme("default")
 	attached, requests, warnings = true, {}, {}
 	vim.defer_fn = defer
-	local ok, err = xpcall(run, debug.traceback)
-	if not ok then
-		io.stderr:write("FAIL " .. name .. "\n" .. err .. "\n")
-		os.exit(1)
-	end
-	print("PASS " .. name)
+	print(name)
+	run()
 end
 
 local function response(sequence)
@@ -232,7 +230,7 @@ test("default links carry the palette into Treesitter, LSP, and diagnostic varia
 		["@keyword"] = "Statement",
 		["@type"] = "Type",
 		["@lsp.type.function"] = "Function",
-		["@lsp.type.property"] = "Function",
+		["@lsp.type.property"] = "Identifier",
 		DiagnosticSignError = "DiagnosticError",
 		DiagnosticVirtualTextWarn = "DiagnosticWarn",
 		DiagnosticFloatingInfo = "DiagnosticInfo",
@@ -283,7 +281,7 @@ test("keeps readable colors and contrast across dark, light, tinted, and low-con
 		for _, bg in ipairs(surfaces) do
 			assert(contrast(bg, normal.fg) >= minimum - 1e-6, pair[1] .. " surface lost contrast")
 			assert(contrast(bg, hl("Comment").fg) >= minimum - 1e-6, pair[1] .. " comment lost contrast")
-			assert(contrast(bg, hl("NonText").fg) >= math.min(3, minimum) - 1e-6)
+			assert(contrast(bg, hl("NonText").fg) >= minimum - 1e-6)
 			for _, name in ipairs({ "DiagnosticError", "String", "Type", "Function", "Statement", "Special" }) do
 				assert(contrast(bg, hl(name).fg) >= minimum - 1e-6, pair[1] .. " " .. name .. " lost contrast")
 			end

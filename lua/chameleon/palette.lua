@@ -1,4 +1,4 @@
--- Only the luminance math needed for readable text and quiet surfaces.
+-- Derive readable text and quiet surfaces from the terminal palette.
 local function channels(hex)
 	local rgb = {}
 	for i = 1, 3 do
@@ -12,11 +12,7 @@ local function luminance(rgb)
 	return 0.2126 * rgb[1] + 0.7152 * rgb[2] + 0.0722 * rgb[3]
 end
 
-local function contrast(a, b)
-	return (math.max(a, b) + 0.05) / (math.min(a, b) + 0.05)
-end
-
--- Mix with black or white in linear RGB to reach a luminance, retaining the hue.
+-- Mix with black or white in linear RGB to reach the desired luminance.
 local function shade(hex, target, round)
 	local rgb = channels(hex)
 	local source = luminance(rgb)
@@ -37,7 +33,7 @@ return function(colors)
 	local bg, fg = colors.background or colors[0], colors.foreground or colors[7]
 	local b, f = luminance(channels(bg)), luminance(channels(fg))
 	local dark = f >= b
-	local available = contrast(b, f)
+	local available = (math.max(b, f) + 0.05) / (math.min(b, f) + 0.05)
 	local minimum = math.min(4.5, available)
 	local away = dark and math.ceil or math.floor
 	local toward = dark and math.floor or math.ceil
@@ -45,20 +41,14 @@ return function(colors)
 	-- One surface for floats, the active line, and diff tints. Preserve text contrast.
 	local ratio = math.min(1.2, available / minimum)
 	local surface_luminance = dark and (b + 0.05) * ratio - 0.05 or (b + 0.05) / ratio - 0.05
-	local surface = shade(bg, surface_luminance, toward)
-	local function text_luminance(ratio)
-		ratio = math.min(ratio, contrast(surface_luminance, f))
-		return dark and (surface_luminance + 0.05) * ratio - 0.05 or (surface_luminance + 0.05) / ratio - 0.05
-	end
-	local text = text_luminance(4.5)
+	local text = dark and (surface_luminance + 0.05) * minimum - 0.05 or (surface_luminance + 0.05) / minimum - 0.05
 
 	local p = {
 		mode = dark and "dark" or "light",
 		bg = bg,
 		fg = fg,
-		surface = surface,
+		surface = shade(bg, surface_luminance, toward),
 		muted = shade(fg, text, away),
-		subtle = shade(fg, text_luminance(3), away),
 	}
 	for i = 1, 6 do
 		local accent = colors[i]

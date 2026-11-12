@@ -27,10 +27,10 @@ On load, Chameleon reads the terminal's 16 ANSI colors with OSC 4 and its defaul
 
 Terminals without OSC 10/11 support fall back to ANSI 7/0 after one second. An incomplete ANSI palette leaves existing highlights intact and shows a warning. A `ColorScheme` event is emitted after the colors arrive so plugins can refresh.
 
-Color derivation uses relative luminance in linear RGB. The shared surface retains at least 4.5:1 foreground contrast, limited by the terminal's own contrast. Muted text and accents target the same contrast on the default and shared surfaces; faint guides target 3:1. The terminal's original colors are preserved for embedded terminals.
+Color derivation uses relative luminance in linear RGB. The shared surface retains at least 4.5:1 foreground contrast, limited by the terminal's own contrast. Muted text, guides, and accents share that contrast target on every surface. The terminal's original colors are preserved for embedded terminals.
 
 ## Development
 
 The implementation has three parts: terminal queries, palette derivation, and highlight assignments, connected by `colors/chameleon.lua`. Most syntax and diagnostic variants inherit through Neovim's default links.
 
-Run `make test` with Neovim 0.12+ on your PATH. The tests exercise terminal events, query cleanup, colorscheme switching, and readability across dark, light, and low-contrast palettes.
+Run `nvim -l tests/init.lua` from the repository with Neovim 0.12+ on your PATH. The tests exercise terminal events, query cleanup, colorscheme switching, and readability across dark, light, and low-contrast palettes.

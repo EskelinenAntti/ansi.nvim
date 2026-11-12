@@ -18,6 +18,7 @@ local function parse(sequence)
 end
 
 return function(callback)
+	-- ColorSchemePre cancels this request before a reload or colorscheme switch.
 	local colors, count = {}, 0
 	local timer, done
 	local function stop()
