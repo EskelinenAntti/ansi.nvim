@@ -12,8 +12,7 @@
     link = "Constant"
   },
   ["@constant.builtin"] = {
-    fg = "#d2b071",
-    italic = true
+    link = "Constant"
   },
   ["@constructor"] = {
     fg = "#d2b071"
@@ -22,13 +21,13 @@
     fg = "#d2b071"
   },
   ["@diff.minus"] = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   ["@diff.plus"] = {
     fg = "#7cbfa0"
   },
   ["@field"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@float"] = {
     link = "Float"
@@ -40,51 +39,71 @@
     fg = "#66c2b5"
   },
   ["@function.call"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@function.method"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@function.method.call"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@keyword"] = {
     link = "Keyword"
   },
   ["@keyword.conditional"] = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.function"] = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.import"] = {
-    bold = true,
     fg = "#66c2b5"
   },
   ["@keyword.operator"] = {
-    bold = true,
     fg = "#66c2b5"
   },
   ["@keyword.repeat"] = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@keyword.return"] = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   ["@markup.heading"] = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
+  },
+  ["@markup.heading.1"] = {
+    link = "markdownH1"
+  },
+  ["@markup.heading.1.delimiter.vimdoc"] = {
+    bg = "#14181a",
+    fg = "#14181a",
+    nocombine = true,
+    sp = "#7e8384",
+    underdouble = true
+  },
+  ["@markup.heading.2"] = {
+    link = "markdownH2"
+  },
+  ["@markup.heading.2.delimiter.vimdoc"] = {
+    bg = "#14181a",
+    fg = "#14181a",
+    nocombine = true,
+    sp = "#7e8384",
+    underline = true
+  },
+  ["@markup.heading.3"] = {
+    link = "markdownH3"
+  },
+  ["@markup.heading.4"] = {
+    link = "markdownH4"
   },
   ["@markup.italic"] = {
     fg = "#d2dbdc",
     italic = true
   },
   ["@markup.link"] = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
   },
   ["@markup.raw"] = {
@@ -101,7 +120,7 @@
     link = "Operator"
   },
   ["@property"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@punctuation.bracket"] = {
     fg = "#d2dbdc"
@@ -127,8 +146,7 @@
     fg = "#66c2b5"
   },
   ["@tag"] = {
-    bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@tag.attribute"] = {
     fg = "#d2b071"
@@ -140,8 +158,7 @@
     link = "Type"
   },
   ["@type.builtin"] = {
-    fg = "#d2b071",
-    italic = true
+    link = "Type"
   },
   ["@type.definition"] = {
     fg = "#d2b071"
@@ -150,11 +167,10 @@
     fg = "#d2dbdc"
   },
   ["@variable.builtin"] = {
-    fg = "#dd7a72",
-    italic = true
+    fg = "#e08b85"
   },
   ["@variable.member"] = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   ["@variable.parameter"] = {
     fg = "#d2dbdc",
@@ -164,7 +180,6 @@
     fg = "#7cbfa0"
   },
   Boolean = {
-    bold = true,
     fg = "#d2b071"
   },
   Changed = {
@@ -176,13 +191,17 @@
   CmpItemAbbr = {
     fg = "#d2dbdc"
   },
+  CmpItemAbbrDeprecated = {
+    fg = "#9ca3a4",
+    strikethrough = true
+  },
   CmpItemAbbrMatch = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   CmpItemAbbrMatchFuzzy = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   CmpItemKind = {
     fg = "#66c2b5"
@@ -192,7 +211,7 @@
     italic = true
   },
   ColorColumn = {
-    bg = "#373939"
+    bg = "#1c1f21"
   },
   Comment = {
     fg = "#9ca3a4",
@@ -202,23 +221,22 @@
     fg = "#7e8384"
   },
   Conditional = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Constant = {
     fg = "#d2b071"
   },
   CurSearch = {
+    bg = "#80a7c5",
     bold = true,
-    fg = "#d2b071",
-    reverse = true
+    fg = "#14181a"
   },
   Cursor = {
     bg = "#e5eded",
     fg = "#14181a"
   },
   CursorColumn = {
-    bg = "#373939"
+    bg = "#1c1f21"
   },
   CursorLine = {
     bg = "#1c1f21"
@@ -226,10 +244,10 @@
   CursorLineNr = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Debug = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Define = {
     fg = "#66c2b5"
@@ -237,32 +255,35 @@
   Delimiter = {
     fg = "#d2dbdc"
   },
+  DiagnosticDeprecated = {
+    strikethrough = true
+  },
   DiagnosticError = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   DiagnosticHint = {
     fg = "#66c2b5"
   },
   DiagnosticInfo = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   DiagnosticOk = {
     fg = "#7cbfa0"
   },
   DiagnosticSignError = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   DiagnosticSignHint = {
     fg = "#66c2b5"
   },
   DiagnosticSignInfo = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   DiagnosticSignWarn = {
     fg = "#d2b071"
   },
   DiagnosticUnderlineError = {
-    sp = "#dd7a72",
+    sp = "#e08b85",
     undercurl = true
   },
   DiagnosticUnderlineHint = {
@@ -270,7 +291,11 @@
     undercurl = true
   },
   DiagnosticUnderlineInfo = {
-    sp = "#729fc0",
+    sp = "#80a7c5",
+    undercurl = true
+  },
+  DiagnosticUnderlineOk = {
+    sp = "#7cbfa0",
     undercurl = true
   },
   DiagnosticUnderlineWarn = {
@@ -278,7 +303,7 @@
     undercurl = true
   },
   DiagnosticVirtualTextError = {
-    fg = "#dd7a72",
+    fg = "#e08b85",
     italic = true
   },
   DiagnosticVirtualTextHint = {
@@ -286,7 +311,7 @@
     italic = true
   },
   DiagnosticVirtualTextInfo = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     italic = true
   },
   DiagnosticVirtualTextOk = {
@@ -301,40 +326,37 @@
     fg = "#d2b071"
   },
   DiffAdd = {
-    bg = "#101315",
-    fg = "#7cbfa0"
+    bg = "#1c2a25"
   },
   DiffChange = {
-    bg = "#101315",
-    fg = "#d2b071"
+    bg = "#2b261e"
   },
   DiffDelete = {
-    bg = "#101315",
-    fg = "#dd7a72"
+    bg = "#332323",
+    fg = "#e08b85"
   },
   DiffText = {
-    bg = "#373939",
+    bg = "#403727",
     bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   Directory = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   EndOfBuffer = {
     fg = "#101315"
   },
   Error = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   ErrorMsg = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Exception = {
-    bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Float = {
     fg = "#d2b071"
@@ -343,14 +365,17 @@
     bg = "#1c1f21",
     fg = "#7e8384"
   },
+  FloatShadow = {
+    bg = "#0b0e0f",
+    blend = 80
+  },
   FloatTitle = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   FoldColumn = {
-    bg = "#14181a",
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Folded = {
     bg = "#101315",
@@ -358,20 +383,33 @@
     italic = true
   },
   Function = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   GitSignsAdd = {
     fg = "#7cbfa0"
   },
+  GitSignsAddInline = {
+    bg = "#273c34",
+    bold = true,
+    fg = "#d2dbdc"
+  },
   GitSignsChange = {
     fg = "#d2b071"
   },
+  GitSignsChangeInline = {
+    link = "DiffText"
+  },
   GitSignsDelete = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
+  },
+  GitSignsDeleteInline = {
+    bg = "#4c3130",
+    fg = "#d2dbdc",
+    strikethrough = true
   },
   HealthError = {
     bold = true,
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   HealthSuccess = {
     bold = true,
@@ -385,22 +423,19 @@
     fg = "#d2dbdc"
   },
   IncSearch = {
-    bold = true,
-    fg = "#d2b071",
-    reverse = true
+    link = "CurSearch"
   },
   Include = {
     fg = "#66c2b5"
   },
   Keyword = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Label = {
     fg = "#66c2b5"
   },
   LineNr = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   LspCodeLens = {
     fg = "#9ca3a4",
@@ -433,9 +468,10 @@
     fg = "#66c2b5"
   },
   MatchParen = {
-    bg = "#7e8384",
+    bg = "#373939",
     bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc",
+    underline = true
   },
   ModeMsg = {
     bold = true,
@@ -450,7 +486,7 @@
     fg = "#d2dbdc"
   },
   NonText = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Normal = {
     bg = "#14181a",
@@ -467,6 +503,9 @@
   Number = {
     fg = "#d2b071"
   },
+  OkMsg = {
+    fg = "#7cbfa0"
+  },
   Operator = {
     fg = "#66c2b5"
   },
@@ -474,13 +513,34 @@
     bg = "#1c1f21",
     fg = "#d2dbdc"
   },
+  PmenuExtra = {
+    fg = "#9ca3a4",
+    italic = true
+  },
+  PmenuExtraSel = {
+    fg = "#9ca3a4",
+    italic = true
+  },
+  PmenuKind = {
+    fg = "#66c2b5"
+  },
+  PmenuKindSel = {
+    fg = "#d2dbdc"
+  },
+  PmenuMatch = {
+    bold = true,
+    fg = "#80a7c5"
+  },
+  PmenuMatchSel = {
+    bold = true,
+    fg = "#80a7c5"
+  },
   PmenuSbar = {
     bg = "#373939"
   },
   PmenuSel = {
     bg = "#373939",
-    bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   PmenuThumb = {
     bg = "#7e8384"
@@ -495,12 +555,15 @@
     bold = true,
     fg = "#7cbfa0"
   },
+  QuickFixLine = {
+    bg = "#373939",
+    fg = "#d2dbdc"
+  },
   Removed = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   Repeat = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   Search = {
     bg = "#d2b071",
@@ -508,7 +571,7 @@
     fg = "#14181a"
   },
   SignColumn = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   Special = {
     fg = "#66c2b5"
@@ -517,10 +580,10 @@
     fg = "#d2b071"
   },
   SpecialKey = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   SpellBad = {
-    sp = "#dd7a72",
+    sp = "#e08b85",
     undercurl = true
   },
   SpellCap = {
@@ -532,12 +595,11 @@
     undercurl = true
   },
   SpellRare = {
-    sp = "#a68fc0",
+    sp = "#ae9ac5",
     undercurl = true
   },
   Statement = {
-    bold = true,
-    fg = "#a68fc0"
+    fg = "#ae9ac5"
   },
   StatusLine = {
     bg = "#1c1f21",
@@ -557,7 +619,7 @@
     fg = "#d2b071"
   },
   Substitute = {
-    bg = "#a68fc0",
+    bg = "#ae9ac5",
     bold = true,
     fg = "#14181a"
   },
@@ -574,7 +636,7 @@
     fg = "#e5eded"
   },
   Tag = {
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopeBorder = {
     bg = "#1c1f21",
@@ -582,7 +644,7 @@
   },
   TelescopeMatching = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopeNormal = {
     bg = "#1c1f21",
@@ -598,10 +660,10 @@
   },
   TelescopePromptPrefix = {
     bg = "#373939",
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   TelescopePromptTitle = {
-    bg = "#729fc0",
+    bg = "#80a7c5",
     bold = true,
     fg = "#14181a"
   },
@@ -612,21 +674,20 @@
     fg = "#d2b071"
   },
   TelescopeResultsDiffDelete = {
-    fg = "#dd7a72"
+    fg = "#e08b85"
   },
   TelescopeSelection = {
     bg = "#373939",
-    bold = true,
-    fg = "#e5eded"
+    fg = "#d2dbdc"
   },
   TelescopeTitle = {
     bg = "#1c1f21",
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Title = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   Todo = {
     bg = "#d2b071",
@@ -640,17 +701,19 @@
     fg = "#d2b071"
   },
   Underlined = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
   },
   VertSplit = {
     fg = "#7e8384"
   },
   Visual = {
-    bg = "#373939"
+    bg = "#373939",
+    fg = "#d2dbdc"
   },
   VisualNOS = {
-    bg = "#373939"
+    bg = "#373939",
+    fg = "#d2dbdc"
   },
   WarningMsg = {
     bold = true,
@@ -658,7 +721,7 @@
   },
   WhichKey = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   WhichKeyDesc = {
     fg = "#d2dbdc"
@@ -677,7 +740,7 @@
     italic = true
   },
   Whitespace = {
-    fg = "#9ca3a4"
+    fg = "#7e8384"
   },
   WildMenu = {
     bg = "#373939",
@@ -708,11 +771,11 @@
   },
   markdownH1 = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   markdownH2 = {
     bold = true,
-    fg = "#729fc0"
+    fg = "#80a7c5"
   },
   markdownH3 = {
     bold = true,
@@ -727,7 +790,25 @@
     italic = true
   },
   markdownLinkText = {
-    fg = "#729fc0",
+    fg = "#80a7c5",
     underline = true
+  },
+  typescriptAliasDeclaration = {
+    link = "Type"
+  },
+  typescriptBraces = {
+    link = "Delimiter"
+  },
+  typescriptEndColons = {
+    link = "Delimiter"
+  },
+  typescriptInterfaceName = {
+    link = "Type"
+  },
+  typescriptTypeParameter = {
+    link = "Type"
+  },
+  typescriptTypeReference = {
+    link = "Type"
   }
 }

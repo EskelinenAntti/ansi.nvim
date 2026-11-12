@@ -1,8 +1,10 @@
 return {
-	---Verify: Terminal ANSI colors are mapped to the same highlight palette as the other themes.
-	["Terminal ANSI colors are mapped to the same highlight palette as the other themes"] = function()
+	---Verify: Readable chromatic variants preserve terminal palette slots.
+	["Readable chromatic variants preserve terminal palette slots"] = function()
 		-- Given
 		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors.background = "#000000"
+		local source = vim.deepcopy(colors)
 
 		-- When
 		local got = require("chameleon.palette").palette_for(colors)
@@ -10,13 +12,14 @@ return {
 		-- Then
 		assert(got.background == colors.background)
 		assert(got.foreground == colors.foreground)
-		assert(got.accent == colors[4])
-		assert(got.red == colors[1])
-		assert(got.green == colors[2])
-		assert(got.orange == colors[3])
-		assert(got.bright_cyan == colors[14])
+		assert(got.accent_1 == colors[1])
+		assert(got.accent_2 == colors[2])
+		assert(got.accent_3 == colors[3])
+		assert(got.accent_4 == colors[4])
+		assert(got.accent_5 == colors[5])
+		assert(got.accent_6 == colors[6])
 		assert(got.mode == "dark")
-		assert(vim.deep_equal(colors, require("tests.current.colors")), "Source colors were modified")
+		assert(vim.deep_equal(colors, source), "Source colors were modified")
 	end,
 
 	---Verify: Use ANSI background and foreground when the terminal does not answer OSC 10 and 11.
@@ -46,11 +49,11 @@ return {
 
 		-- Then
 		assert(got.mode == "light")
-		assert(got.bright_foreground == "#000000")
+		assert(got.foreground_emphasis == "#000000")
 		local color = require("chameleon.color")
-		assert(math.abs(color.tone(got.selection) - 92) < 0.5)
-		assert(math.abs(color.tone(got.lighter_background) - 98) < 0.5)
-		assert(color.contrast(got.selection, got.light_foreground) >= 4.5)
+		assert(math.abs(color.tone(got.background_emphasis) - 92) < 0.5)
+		assert(math.abs(color.tone(got.background_raised) - 98) < 0.5)
+		assert(color.contrast(got.background_emphasis, got.foreground_muted) >= 4.5)
 	end,
 
 	---Verify: Dark surfaces follow Material tonal spacing relative to the terminal background.
@@ -64,17 +67,17 @@ return {
 		local got = require("chameleon.palette").palette_for(colors)
 
 		-- Then
-		assert(math.abs(color.tone(got.lighter_background) - baseline - 4) < 0.5)
-		assert(math.abs(color.tone(got.selection) - baseline - 16) < 0.5)
-		assert(math.abs(color.tone(got.dark_background) - baseline + 2) < 0.5)
-		assert(math.abs(color.tone(got.darker_background) - baseline + 4) < 0.5)
+		assert(math.abs(color.tone(got.background_raised) - baseline - 4) < 0.5)
+		assert(math.abs(color.tone(got.background_emphasis) - baseline - 16) < 0.5)
+		assert(math.abs(color.tone(got.background_recessed) - baseline + 2) < 0.5)
+		assert(math.abs(color.tone(got.background_deep) - baseline + 4) < 0.5)
 	end,
 
 	---Verify: Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes.
 	["Surface tones and derived text preserve contrast across light, dark, and low-contrast palettes"] = function()
 		-- Given
 		local color = require("chameleon.color")
-		local pairs = {
+		local color_pairs = {
 			{ "#000000", "#ffffff" },
 			{ "#ffffff", "#000000" },
 			{ "#555555", "#ffffff" },
@@ -84,9 +87,11 @@ return {
 			{ "#444444", "#555555" },
 			{ "#555555", "#444444" },
 			{ "#444444", "#444444" },
+			{ "#444444", "#ebdbb2" },
+			{ "#666666", "#ebdbb2" },
 		}
 
-		for _, pair in ipairs(pairs) do
+		for _, pair in ipairs(color_pairs) do
 			local colors = vim.deepcopy(require("tests.current.colors"))
 			colors.background, colors.foreground = pair[1], pair[2]
 
@@ -98,17 +103,90 @@ return {
 			local minimum = math.min(4.5, color.contrast(pair[1], pair[2]))
 			for _, surface in ipairs({
 				got.background,
-				got.dark_background,
-				got.darker_background,
-				got.lighter_background,
-				got.selection,
+				got.background_recessed,
+				got.background_raised,
+				got.background_emphasis,
 			}) do
 				local available = color.contrast(surface, pair[2])
 				assert(available >= minimum - 0.000001, "Surface reduced text contrast: " .. surface)
-				assert(color.contrast(surface, got.light_foreground) >= math.min(4.5, available) - 0.000001)
-				assert(color.contrast(surface, got.muted) >= math.min(3, available) - 0.000001)
+				assert(color.contrast(surface, got.foreground_muted) >= math.min(4.5, available) - 0.000001)
+				assert(color.contrast(surface, got.foreground_subtle) >= math.min(3, available) - 0.000001)
+				assert(color.contrast(surface, got.foreground_emphasis) >= minimum - 0.000001)
+				for index = 1, 6 do
+					local role = "accent_" .. index
+					assert(color.contrast(surface, got[role]) >= minimum - 0.000001, role .. " lost contrast")
+				end
+			end
+			assert(color.contrast(got.background_contrast, got.foreground_on_contrast) >= minimum - 0.000001)
+			for _, role in ipairs({
+				"accent_1_subtle",
+				"accent_2_subtle",
+				"accent_3_subtle",
+				"accent_1_muted",
+				"accent_2_muted",
+				"accent_3_muted",
+			}) do
+				assert(color.contrast(got[role], pair[2]) >= minimum - 0.000001, role .. " lost contrast")
 			end
 		end
+	end,
+
+	---Verify: An accent readable on the emphasis surface must also remain readable on the default background.
+	["All six accents preserve contrast across every editor surface"] = function()
+		local color = require("chameleon.color")
+		for _, pair in ipairs({
+			{ "#555555", "#ffffff", "#000000" },
+			{ "#888888", "#000000", "#ffffff" },
+		}) do
+			local colors = vim.deepcopy(require("tests.current.colors"))
+			colors.background, colors.foreground = pair[1], pair[2]
+			for index = 1, 6 do
+				colors[index] = pair[3]
+			end
+
+			local got = require("chameleon.palette").palette_for(colors)
+
+			assert(color.contrast(got.background_emphasis, pair[3]) >= 4.5)
+			assert(color.contrast(got.background, pair[3]) < 4.5)
+			for index = 1, 6 do
+				local accent = got["accent_" .. index]
+				assert(accent ~= colors[index])
+				for _, surface in ipairs({
+					got.background,
+					got.background_recessed,
+					got.background_raised,
+					got.background_emphasis,
+				}) do
+					assert(color.contrast(surface, accent) >= 4.5)
+				end
+			end
+		end
+	end,
+
+	---Verify: Low-contrast light accents are corrected without changing readable colors or terminal colors.
+	["Low-contrast light accents are corrected while readable colors are preserved"] = function()
+		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors.background, colors.foreground = "#eff1f5", "#4c4f69"
+		colors[5], colors[4] = "#ea76cb", "#1e40af"
+		local source = vim.deepcopy(colors)
+
+		local got = require("chameleon.palette").palette_for(colors)
+
+		assert(require("chameleon.color").contrast(got.background_raised, got.accent_5) >= 4.5)
+		assert(got.accent_5 ~= colors[5])
+		assert(got.accent_4 == colors[4])
+		assert(vim.deep_equal(colors, source), "Terminal colors were modified")
+	end,
+
+	---Verify: ANSI white must preserve the default foreground's contrast on every editor surface.
+	["Emphasized text preserves the default foreground contrast"] = function()
+		local colors = vim.deepcopy(require("tests.current.colors"))
+		colors.background, colors.foreground = "#555555", "#ffffff"
+		colors[15] = "#000000"
+
+		local got = require("chameleon.palette").palette_for(colors)
+
+		assert(got.foreground_emphasis == colors.foreground)
 	end,
 
 	---Verify: Theme mode uses linear-light luminance instead of encoded RGB brightness.
